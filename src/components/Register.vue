@@ -19,20 +19,19 @@
 <script>
 export default {
   name: 'Register',
-  data () {
+  data() {
     return {
-      username: "",
-      studentID: "",
-      major: "",
-      mail: "",
-      phone: "",
-      password: "",
-      rePassword: "",
-      password: "",
+      username: '',
+      studentID: '',
+      major: '',
+      mail: '',
+      phone: '',
+      password: '',
+      rePassword: '',
       checked: false
-    }
+    };
   }
-}
+};
 </script>
 
 <style>

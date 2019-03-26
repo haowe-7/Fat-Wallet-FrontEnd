@@ -14,13 +14,13 @@
 <script>
 export default {
   name: 'Login',
-  data () {
+  data() {
     return {
-      username: "",
-      password: ""
-    }
+      username: '',
+      password: ''
+    };
   }
-}
+};
 </script>
 
 <style>

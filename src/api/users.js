@@ -9,11 +9,11 @@ export function login(username, password) {
       password
     }
   });
-}
+};
 
 export function logout() {
   return request({
     url: '/api/users/logout',
     method: 'post'
   });
-}
+};
