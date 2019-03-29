@@ -3,15 +3,31 @@
     <a id="back" href="/login"></a>
     <img id="logo" src="../assets/盈小钱logo.png"/>
     <div id="input-box">
-      <el-input v-model="username" placeholder="姓名"></el-input>
-      <el-input v-model="studentID" placeholder="学号"></el-input>
-      <el-input v-model="major" placeholder="专业"></el-input>
-      <el-input v-model="mail" placeholder="邮箱"></el-input>
-      <el-input v-model="phone" placeholder="手机"></el-input>
-      <el-input v-model="password" placeholder="密码"></el-input>
-      <el-input v-model="rePassword" placeholder="确认密码"></el-input>
-      <el-checkbox v-model="checked" size="medium">同意盈小钱用户协议</el-checkbox>
-      <el-button height="25px" round>注册</el-button>
+      <el-form :model="user_info" status-icon :rules="valiate_rule">
+        <el-form-item prop="username">
+          <el-input v-model="user_info.username" placeholder="姓名" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item prop="studentID">
+          <el-input v-model="user_info.studentID" placeholder="学号" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item prop="major">
+          <el-input v-model="user_info.major" placeholder="专业" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item prop="mail">
+          <el-input v-model="user_info.mail" placeholder="邮箱" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item prop="phone">
+          <el-input v-model="user_info.phone" placeholder="手机" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item prop="password">
+          <el-input v-model="user_info.password" placeholder="密码" type="password" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item prop="rePassword">
+          <el-input v-model="user_info.rePassword" placeholder="确认密码" type="password" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-checkbox v-model="checked" size="medium">同意盈小钱用户协议</el-checkbox>
+        <el-button height="25px" round>注册</el-button>
+      </el-form>
     </div>
   </div>
 </template>
@@ -21,14 +37,24 @@ export default {
   name: 'Register',
   data() {
     return {
-      username: '',
-      studentID: '',
-      major: '',
-      mail: '',
-      phone: '',
-      password: '',
-      rePassword: '',
-      checked: false
+      user_info: {
+        username: '',
+        studentID: '',
+        major: '',
+        mail: '',
+        phone: '',
+        password: '',
+        rePassword: '',
+        checked: false
+      },
+      valiate_rule: {
+        // username: [
+        //   { validator: validateUsername, trigger: 'blur' }
+        // ],
+        // password: [
+        //   { validator: validatePassword, trigger: 'blur' }
+        // ]
+      }
     };
   }
 };
@@ -37,11 +63,11 @@ export default {
 <style>
 
 #main {
-  background-color: #333333;
+    background: url("../assets/background.jpg"), no-repeat;
+  background-size: cover;
   width: 100%;
-  height: auto;
+  height: 120%;
   padding: 0%;
-  padding-bottom: 10%;
   margin: 0%;
 }
 
@@ -60,7 +86,6 @@ export default {
 }
 
 .el-input input {
-  margin-top: 6%;
   font-size: 20px;
   height: 45px;
   border-color: gray;
@@ -71,8 +96,7 @@ export default {
 }
 
 .el-checkbox {
-    margin: 2%;
-    margin-top: 8%;
+  margin: 2%;
 }
 
 .el-button {
@@ -84,14 +108,14 @@ export default {
 }
 
 #back{
-    display:inline-block;
-    width: 60px;
-    height: 60px;
-    position: fixed;
-    left: 60px;
-    top: 40px;
-    background:url("../assets/back.png");
-    background-size: cover;
+  display:inline-block;
+  width: 60px;
+  height: 60px;
+  position: fixed;
+  left: 60px;
+  top: 40px;
+  background:url("../assets/back.png");
+  background-size: cover;
 }
 
 </style>

@@ -2,11 +2,17 @@
   <div id="main">
     <img id="logo" src="../assets/盈小钱logo.png"/>
     <div id="input-box">
-      <el-input v-model="username" placeholder="用户名/邮箱/手机号"></el-input>
-      <el-input v-model="password" placeholder="请输入密码" show-password></el-input>
-      <a href="http://baidu.com">忘记密码？</a>
-      <el-button height="25px" round>登录</el-button>
-      <a id="register" href="/register">还没有账户？立即注册</a>
+      <el-form :model="user_info" status-icon :rules="valiate_rule">
+        <el-form-item prop="username">
+          <el-input v-model="user_info.username" placeholder="用户名/邮箱/手机号" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item prop="password">
+          <el-input type="password" v-model="user_info.password" placeholder="请输入密码" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <a id="forgetPass" href="http://baidu.com">忘记密码？</a>
+        <el-button height="25px" round>登录</el-button>
+      <span>还没有账户?<a id="register" href="/register">立即注册</a></span>
     </div>
   </div>
 </template>
@@ -15,9 +21,35 @@
 export default {
   name: 'Login',
   data() {
+    var validateUsername = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('用户名不能为空'));
+      } else {
+        callback();
+      }
+    };
+
+    var validatePassword = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('密码不能为空'));
+      } else {
+        callback();
+      }
+    };
+
     return {
-      username: '',
-      password: ''
+      user_info: {
+        username: '',
+        password: ''
+      },
+      valiate_rule: {
+        username: [
+          { validator: validateUsername, trigger: 'blur' }
+        ],
+        password: [
+          { validator: validatePassword, trigger: 'blur' }
+        ]
+      }
     };
   }
 };
@@ -39,7 +71,7 @@ export default {
   margin-left: 35%;
   margin-right: 35%;
   margin-top: 5%;
-  margin-bottom: 2%;
+  margin-bottom: 4%;
 }
 
 #input-box {
@@ -49,17 +81,15 @@ export default {
 }
 
 .el-input {
-  margin-top: 5%;
   font-size: 20px;
 }
 
 .el-input input {
-  height: 40px;
+  height: 45px;
   border-color: gray;
   background-color:transparent;
   border: 1px solid;
   border-radius: 25px;
-  padding: 5%;
 }
 
 .el-button {
@@ -73,15 +103,23 @@ export default {
 
 a {
   display: inline-block;
-  width: 100%;
-  margin-top: 4%;
-  color: gray;
+  margin-top: 2%;
   text-decoration:none;
-  text-align: right;
+}
+
+#forgetPass {
+  float: right;
+  color: gray;
+}
+
+span {
+  color: gray;
 }
 
 #register {
-  text-align: left;
+  font-size: 18px;
+  color: gray;
+  font-weight: bold;
 }
 
 </style>
