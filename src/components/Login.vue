@@ -173,6 +173,7 @@ a {
 #forgetPass {
   float: right;
   color: gray;
+  cursor: pointer;
 }
 
 span {
