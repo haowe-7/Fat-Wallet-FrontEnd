@@ -73,7 +73,7 @@
         // verify whether vericode the same as identycode
         if (this.veriCode.toLowerCase() === this.identifyCode.toLowerCase()) {
           // TODO: verify contact info
-          //var isContactInfoOK = (this.contactInfo === '944131226@qq.com');
+          // var isContactInfoOK = (this.contactInfo === '944131226@qq.com');
           var isContactInfoOK = true;
           if (isContactInfoOK) {
             this.text_info.text1 = '密码找回·第二步';
