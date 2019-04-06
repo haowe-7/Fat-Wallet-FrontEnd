@@ -5,7 +5,7 @@
 </template>
 <script>
   export default {
-    name: 'SIdentify',
+    name: 'Identify',
     props: {
       identifyCode: {
         type: String,
