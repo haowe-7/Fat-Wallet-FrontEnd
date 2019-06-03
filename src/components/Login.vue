@@ -14,40 +14,16 @@
       <el-button height="25px" round>登录</el-button>
       <span>还没有账户?<a id="register" href="/register">立即注册</a></span>
     </div>
-    <div id="findpass-dialog">
-      <el-dialog :close-on-click-modal="false" :close-on-press-escape="false" custom-class="custom-style" :visible.sync="dialogFormVisible">
-        <div slot="title" class="dialog-title">
-          <br><span id="dialog-text1">找回密码</span><br>
-          <br><span id="dialog-text2">验证码将会发送至你的注册邮箱或手机</span><br>
-        </div>
-        <div class="dialog-body">
-          <el-form :model="user_info" status-icon :rules="valiate_rule"> 
-            <el-form-item prop="username">
-              <el-input v-model="user_info.username" placeholder="用户名/邮箱/手机号" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item prop="vericode">
-              <el-input v-model="vericode" placeholder="验证码" autocomplete="off"></el-input>
-            </el-form-item>
-          </el-form>
-          <div id="code">
-            <identify :identifyCode = "identifyCode" :contentWidth = 180 :contentHeight = 48></identify>
-            <span id="change-code-text" @click="refreshCode">换一张验证码</span>
-          </div>
-        </div>
-        <div slot="footer" class="dialog-footer">
-          <el-button type="primary" round @click="nextStepClick">下一步</el-button>
-        </div>
-      </el-dialog>
-    </div>
+    <PasswordBackDialog :visible.sync = "dialogFormVisible"></PasswordBackDialog>
   </div>
 </template>
 
 <script>
-import Identify from '@/components/Identify';
+import PasswordBackDialog from '@/components/PasswordBackDialog';
 export default {
   name: 'Login',
   components: {
-    Identify
+    PasswordBackDialog
   },
   data() {
     var validateUsername = (rule, value, callback) => {
@@ -79,40 +55,17 @@ export default {
           { validator: validatePassword, trigger: 'blur' }
         ]
       },
-      dialogFormVisible: false,
-      identifyCodes: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
-      identifyCode: '',
-      vericode: ''
+      dialogFormVisible: false
     };
   },
   methods: {
     passwordFindMethod: function() {
-      this.refreshCode();
+      // this.refreshCode();
       this.dialogFormVisible = true;
-    },
-    randomNum(min, max) {
-      return Math.floor(Math.random() * (max - min) + min);
-    },
-    refreshCode() {
-      this.identifyCode = '';
-      this.makeCode(this.identifyCodes, 4);
-    },
-    makeCode(o, l) {
-      for (let i = 0; i < l; i++) {
-        this.identifyCode += this.identifyCodes[
-          this.randomNum(0, this.identifyCodes.length)
-        ];
-      }
-      // console.log(this.identifyCode);
-    },
-    nextStepClick: function() {
-      this.dialogFormVisible = false;
-      this.vericode = '';
     }
   },
   mounted() {
-    this.identifyCode = '';
-    this.makeCode(this.identifyCodes, 4);
+    this.dialogFormVisible = false;
   }
 };
 </script>
