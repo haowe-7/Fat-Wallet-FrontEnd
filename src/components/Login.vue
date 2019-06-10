@@ -2,17 +2,17 @@
   <div id="main">
     <img id="logo" src="../assets/盈小钱logo.png"/>
     <div id="input-box">
-      <el-form :model="user_info" status-icon :rules="valiate_rule">
+      <el-form :model="loginForm" ref="loginForm" status-icon :rules="loginRules">
         <el-form-item prop="username">
-          <el-input v-model="user_info.username" placeholder="用户名/邮箱/手机号" autocomplete="off"></el-input>
+          <el-input v-model="loginForm.username" placeholder="用户名" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input type="password" v-model="user_info.password" placeholder="请输入密码" autocomplete="off"></el-input>
+          <el-input type="password" v-model="loginForm.password" placeholder="请输入密码" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <a id="forgetPass" v-on:click="passwordFindMethod">忘记密码？</a>
-      <el-button height="25px" round>登录</el-button>
-      <span>还没有账户?<a id="register" href="/register">立即注册</a></span>
+      <el-button height="25px" :loading="loading" v-on:click="handleLogin" round>登录</el-button>
+      <span>还没有账户?<a id="register" v-on:click="gotoRegister">立即注册</a></span>
     </div>
     <PasswordBackDialog :visible.sync = "dialogFormVisible"></PasswordBackDialog>
   </div>
@@ -20,13 +20,14 @@
 
 <script>
 import PasswordBackDialog from '@/components/PasswordBackDialog';
+
 export default {
   name: 'Login',
   components: {
     PasswordBackDialog
   },
   data() {
-    var validateUsername = (rule, value, callback) => {
+    const validateUsername = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('用户名不能为空'));
       } else {
@@ -34,7 +35,7 @@ export default {
       }
     };
 
-    var validatePassword = (rule, value, callback) => {
+    const validatePassword = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('密码不能为空'));
       } else {
@@ -43,11 +44,11 @@ export default {
     };
 
     return {
-      user_info: {
+      loginForm: {
         username: '',
         password: ''
       },
-      valiate_rule: {
+      loginRules: {
         username: [
           { validator: validateUsername, trigger: 'blur' }
         ],
@@ -55,6 +56,7 @@ export default {
           { validator: validatePassword, trigger: 'blur' }
         ]
       },
+      loading: false,
       dialogFormVisible: false
     };
   },
@@ -62,6 +64,26 @@ export default {
     passwordFindMethod: function() {
       // this.refreshCode();
       this.dialogFormVisible = true;
+    },
+    handleLogin() {
+      this.$refs.loginForm.validate(valid => {
+        if (valid) {
+          this.loading = true;
+          this.$store.dispatch('Login', this.loginForm).then(() => {
+            this.loading = false;
+            this.$router.push({ path: '/' });
+          }).catch(() => {
+            console.log('error submit!!');
+            this.loading = false;
+          });
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
+    },
+    gotoRegister() {
+      this.$router.push({ path: '/register' });
     }
   },
   mounted() {
@@ -137,6 +159,7 @@ span {
   font-size: 18px;
   color: gray;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .dialog-title {
