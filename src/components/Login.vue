@@ -11,7 +11,7 @@
         </el-form-item>
       </el-form>
       <a id="forgetPass" v-on:click="passwordFindMethod">忘记密码？</a>
-      <el-button height="25px" round>登录</el-button>
+      <el-button height="25px" round v-on:click="jumpToMainPage">登录</el-button>
       <span>还没有账户?<a id="register" href="/register">立即注册</a></span>
     </div>
     <PasswordBackDialog :visible.sync = "dialogFormVisible"></PasswordBackDialog>
@@ -62,6 +62,10 @@ export default {
     passwordFindMethod: function() {
       // this.refreshCode();
       this.dialogFormVisible = true;
+    },
+    jumpToMainPage: function() {
+      console.log('jumpToMainPage');
+      this.$router.push({ path: '/mainpage' });
     }
   },
   mounted() {
