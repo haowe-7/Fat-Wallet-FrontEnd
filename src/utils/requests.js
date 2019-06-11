@@ -7,12 +7,13 @@ import router from '../router';
 const service = axios.create({
   // baseURL: process.env.BASE_API, // api的base_url
   timeout: 15000, // 请求超时时间
-  // withCredentials: true
+  withCredentials: true // 自动携带 cookies
 });
+
 // request拦截器
 // service.interceptors.request.use(config => {
 //   if (store.getters.token) {
-//     config.headers['X-Token'] = getToken(); // 让每个请求携带自定义token 请根据实际情况自行修改
+//     config.headers['X-Token'] = getToken();
 //   }
 //   return config;
 // }, error => {
@@ -20,6 +21,7 @@ const service = axios.create({
 //   console.log(error); // for debug
 //   Promise.reject(error);
 // });
+
 // const noReloginUrlList = [
 //   /.*\/api\/auth\/.*/
 // ];
@@ -32,13 +34,18 @@ const service = axios.create({
 //   });
 //   return flag;
 // }
+
 // respone拦截器
 service.interceptors.response.use(
   response => {
-    return response.data;
+    return response;
   },
   error => {
-    if (error.response.status === 401) {
+    if (error.response.status === 400) {
+      if (error.response.data.error) {
+        return Promise.reject(error.response.data.error);
+      }
+    } else if (error.response.status === 401) {
       console.log('未认证');
       console.log(error.request.responseURL);
       if (router.currentRoute.path !== '/login') {

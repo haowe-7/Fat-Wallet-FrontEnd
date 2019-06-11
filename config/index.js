@@ -12,8 +12,12 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api':{
-        target: ' https://easy-mock.com/mock/5cfdfb7cd9e3cd1df89da0a5/Fat-Wallet-FrontEnd/',
-        changeOrigin: true
+        target: 'https://easy-mock.com/mock/5cfdfb7cd9e3cd1df89da0a5/Fat-Wallet-FrontEnd/',
+        // target: 'http://192.168.199.229:5000/',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        }
       }
     },
 

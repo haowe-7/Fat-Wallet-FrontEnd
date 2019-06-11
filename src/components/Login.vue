@@ -72,8 +72,9 @@ export default {
           this.$store.dispatch('Login', this.loginForm).then(() => {
             this.loading = false;
             this.$router.push({ path: '/mainpage' });
-          }).catch(() => {
-            console.log('error submit!!');
+          }).catch((error) => {
+            console.log(error);
+            this.$message.error(error);
             this.loading = false;
           });
         } else {

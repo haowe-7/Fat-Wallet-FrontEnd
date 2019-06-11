@@ -107,18 +107,14 @@ export default {
           }
           this.loading = true;
           this.$store.dispatch('Register', this.registerForm).then(response => {
-            this.loading = false;
-            if (response.status) {
-              this.$message({
-                message: '注册成功，请登录！',
-                type: 'success'
-              });
-              this.$router.push({ path: '/login' });
-            } else {
-              this.$message.error(response.message);
-            }
+            this.$message({
+              message: '注册成功，请登录！',
+              type: 'success'
+            });
+            this.$router.push({ path: '/login' });
           }).catch((error) => {
-            this.$message.error('系统错误：' + error);
+            this.$message.error('注册失败：' + error);
+          }).finally(() => {
             this.loading = false;
           });
         } else {

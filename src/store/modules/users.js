@@ -5,7 +5,7 @@ const user = {
     info: {
       user_id: null,
       username: null,
-      role: null,
+      avatar: null,
       email: null
     },
     auth: false
@@ -18,8 +18,8 @@ const user = {
     SET_USERNAME: (state, username) => {
       state.info.username = username;
     },
-    SET_ROLE: (state, role) => {
-      state.info.role = role;
+    SET_AVATAR: (state, avatar) => {
+      state.info.avatar = avatar;
     },
     SET_EMAIL: (state, email) => {
       state.info.email = email;
@@ -33,15 +33,21 @@ const user = {
     // 登录
     Login({ commit }, userInfo) {
       const username = userInfo.username.trim();
+      const password = userInfo.password;
       return new Promise((resolve, reject) => {
-        login(username, userInfo.password).then(response => {
+        login(username, password).then(response => {
+          const status = response.status;
           const data = response.data;
-          commit('SET_USERID', data.user_id);
-          commit('SET_USERNAME', data.username);
-          commit('SET_ROLE', data.role);
-          commit('SET_EMAIL', data.email);
-          commit('SET_AUTH', true);
-          resolve();
+          if (status === 200) {
+            commit('SET_USERID', data.user_id);
+            commit('SET_USERNAME', data.username);
+            commit('SET_AVATAR', data.avatar);
+            commit('SET_EMAIL', data.email);
+            commit('SET_AUTH', true);
+            resolve();
+          } else {
+            throw data.error;
+          }
         }).catch(error => {
           reject(error);
         });
@@ -52,7 +58,13 @@ const user = {
     Register({ commit }, userInfo) {
       return new Promise((resolve, reject) => {
         register(userInfo).then(response => {
-          resolve(response);
+          const status = response.status;
+          const data = response.data;
+          if (status === 200) {
+            resolve();
+          } else {
+            throw data.error;
+          }
         }).catch(error => {
           reject(error);
         });
@@ -87,7 +99,7 @@ const user = {
       return new Promise(resolve => {
         commit('SET_USERID', null);
         commit('SET_USERNAME', null);
-        commit('SET_ROLE', null);
+        commit('SET_AVATAR', null);
         commit('SET_EMAIL', null);
         commit('SET_AUTH', false);
         resolve();
@@ -100,7 +112,7 @@ const user = {
           const data = resp.data;
           commit('SET_USERID', data.user_id);
           commit('SET_USERNAME', data.username);
-          commit('SET_ROLE', data.role);
+          commit('SET_AVATAR', data.avatar);
           commit('SET_EMAIL', data.email);
           commit('SET_AUTH', true);
           resolve();
