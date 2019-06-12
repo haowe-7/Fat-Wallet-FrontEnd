@@ -29,25 +29,20 @@ export default {
   },
   data() {
     return {
-        activeName: 'questionnaire',
+      activeName: 'questionnaire',
     };
   },
   methods: {
+    handleClick(tab, event) {
+      console.log(tab, event);
+    }
   },
 };
 </script>
 
 <style>
 .category-sub-title {
-  font-size: 100%;
+  font-size: 110%;
   color: gray;
 }
-/* .nav {
-  font-size: 150%;
-  font-weight: bold;
-  color: gray;
-  margin-left: 2%;
-  cursor: pointer;
-  text-decoration:none;
-} */
 </style>
