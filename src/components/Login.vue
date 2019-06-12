@@ -1,5 +1,5 @@
 <template>
-  <div id="main">
+  <div id="login-main">
     <img id="logo" src="../assets/盈小钱logo.png"/>
     <div id="input-box">
       <el-form :model="loginForm" ref="loginForm" status-icon :rules="loginRules">
@@ -95,7 +95,7 @@ export default {
 
 <style>
 
-#main {
+#login-main {
   background: url("../assets/background.jpg"), no-repeat;
   background-size: cover;
   width: 100%;

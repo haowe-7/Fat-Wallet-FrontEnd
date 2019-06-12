@@ -3,6 +3,8 @@ import Router from 'vue-router';
 import Login from '@/components/Login';
 import Register from '@/components/Register';
 import MainPage from '@/components/MainPage';
+import Task from '@/components/TaskPage';
+import MyInfo from '@/components/MyInfoPage';
 
 Vue.use(Router);
 
@@ -11,7 +13,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'MainPage',
+      name: 'HomePage',
       component: Login
     }, {
       path: '/login',
@@ -24,7 +26,23 @@ export default new Router({
     }, {
       path: '/mainpage',
       name: 'MainPage',
-      component: MainPage
+      component: MainPage,
+      children: [
+        {
+          path: '/',
+          redirect: 'task'
+        },
+        {
+          path: 'task',
+          name: 'Task',
+          component: Task,
+        },
+        {
+          path: 'myinfo',
+          name: 'MyInfo',
+          component: MyInfo,
+        }
+      ]
     }
   ]
 });
