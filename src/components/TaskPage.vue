@@ -7,7 +7,7 @@
       </el-tab-pane>
       <el-tab-pane name="classification">
         <span slot="label" class='sub-title'>分类</span>
-        分类
+        <CategoryPage></CategoryPage>
       </el-tab-pane>
       <el-tab-pane name="group">
         <span slot="label" class='sub-title'>小组</span>
@@ -18,11 +18,12 @@
 </template>
 <script>
 import RecommendPage from '@/components/RecommendPage';
-
+import CategoryPage from '@/components/CategoryPage';
 export default {
   name: 'TaskPage',
   components: {
-    RecommendPage
+    RecommendPage,
+    CategoryPage
   },
   data() {
     return {
