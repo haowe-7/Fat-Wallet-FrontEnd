@@ -7,6 +7,7 @@ import Task from '@/components/TaskPage';
 import MyInfo from '@/components/MyInfoPage';
 import MyInfoList from '@/components/MyInfoList';
 import MyPublishTask from '@/components/MyPublishTask';
+import PublishDeliverTaskDetail from '@/components/PublishDeliverTaskDetail';
 
 Vue.use(Router);
 
@@ -57,6 +58,11 @@ export default new Router({
               path: 'mypublishtask',
               name: 'MyPublishTask',
               component: MyPublishTask
+            },
+            {
+              path: 'publish-deliver-task-detail',
+              name: 'PublishDeliverTaskDetail',
+              component: PublishDeliverTaskDetail,
             }
           ]
         }

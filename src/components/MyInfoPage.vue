@@ -19,6 +19,7 @@
       <div id="user-detail-info-panel">
         <router-link to="/mainpage/myinfo/myinfolist"></router-link>
         <router-link to="/mainpage/myinfo/mypublishtask"></router-link>
+        <router-link to='/mainpage/myinfo/publish-deliver-task-detail'></router-link>
         <router-view></router-view>
       </div>
       <!-- 导航选择模块 -->
@@ -161,6 +162,7 @@ export default {
   color: gray;
   border-block-end: 1px solid gray;
   margin-bottom: 3%;
+  cursor: pointer;
 }
 
 /*发布任务按钮*/
