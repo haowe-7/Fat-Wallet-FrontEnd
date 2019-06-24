@@ -8,6 +8,7 @@ import MyInfo from '@/components/MyInfoPage';
 import MyInfoList from '@/components/MyInfoList';
 import MyPublishTask from '@/components/MyPublishTask';
 import PublishDeliverTaskDetail from '@/components/PublishDeliverTaskDetail';
+import TaskBreifInfoPage from '@/components/TaskBreifInfoPage';
 
 Vue.use(Router);
 
@@ -65,6 +66,11 @@ export default new Router({
               component: PublishDeliverTaskDetail,
             }
           ]
+        },
+        {
+          path: 'task-breif-info',
+          name: 'TaskBreifInfoPage',
+          component: TaskBreifInfoPage
         }
       ]
     }

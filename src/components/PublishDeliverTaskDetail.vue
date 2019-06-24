@@ -60,7 +60,7 @@ export default {
       setTimeout(() => {
         this.loading = false;
         this.$router.push({ path: '/mainpage/myinfo/myinfolist' });
-        this.$message.error('这个响应还没写呢');
+        this.$message('成功发布任务');
       }, 2000);
     }
   },
