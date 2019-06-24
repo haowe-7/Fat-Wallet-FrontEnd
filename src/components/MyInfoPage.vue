@@ -1,5 +1,6 @@
 <template>
   <div id="my-info-page-main">
+    <!-- 顶部信息模块 -->
     <div id="user-info-panel">
       <div id="user-icon">
       <img src="../assets/background.jpg"/>
@@ -12,45 +13,17 @@
         <el-button id="edit-user-info-button" round="">编辑个人资料</el-button>
       </div>
     </div>
+    <!-- 下方控制模块 -->
     <div id="user-control-panel">
+      <!-- 详情显示模块：包括信息块列表界面和概述发布任务界面 -->
       <div id="user-detail-info-panel">
-        <el-tabs v-model="activeName" @tab-click="handleClick">
-          <el-tab-pane class="user-control-tab-panel" name="release">
-            <span slot="label" class='category-sub-title'>发布</span>
-            <div v-for="o in 4" :key="o" class="text item">
-              <TaskBlock></TaskBlock>
-            </div>
-          </el-tab-pane>
-          <el-tab-pane class="user-control-tab-panel" name="finish">
-            <span slot="label" class='category-sub-title'>完成</span>
-            <div v-for="o in 4" :key="o" class="text item">
-              <TaskBlock></TaskBlock>
-            </div>
-          </el-tab-pane>
-          <el-tab-pane class="user-control-tab-panel" name="collect">
-            <span slot="label" class='category-sub-title'>收藏</span>
-            <div v-for="o in 4" :key="o" class="text item">
-              <TaskBlock></TaskBlock>
-            </div>
-          </el-tab-pane>
-          <el-tab-pane class="user-control-tab-panel" name="comment">
-            <span slot="label" class='category-sub-title'>评论</span>
-            评论
-          </el-tab-pane>
-          <el-tab-pane class="user-control-tab-panel" name="follow">
-            <span slot="label" class='category-sub-title'>关注</span>
-            关注
-          </el-tab-pane>
-          <el-tab-pane class="user-control-tab-panel" name="share">
-            <span slot="label" class='category-sub-title'>分享</span>
-            <div v-for="o in 4" :key="o" class="text item">
-              <TaskBlock></TaskBlock>
-            </div>
-          </el-tab-pane>
-        </el-tabs>
+        <router-link to="/mainpage/myinfo/myinfolist"></router-link>
+        <router-link to="/mainpage/myinfo/mypublishtask"></router-link>
+        <router-view></router-view>
       </div>
+      <!-- 导航选择模块 -->
       <div id="user-nav-panel">
-        <el-button id="publish-task-button" round>发布任务</el-button>
+        <el-button id="publish-task-button" v-on:click="publishTaskButtonClick" round> {{publishTaskButtonText}}</el-button>
         <div>
           <div class="user-nav-div">我的任务</div>
           <div class="user-nav-div">我的账户</div>
@@ -59,24 +32,23 @@
         </div>
       </div>
     </div>
+    <div style="margin: 20px 0;"></div>
   </div>
 </template>
 
 <script>
-import TaskBlock from '@/components/TaskBlock';
 export default {
   name: 'MyInfoPage',
   components: {
-    TaskBlock
   },
   data() {
     return {
-      activeName: 'release'
+      publishTaskButtonText: '发布任务'
     };
   },
   methods: {
-    handleClick(tab, event) {
-      console.log(tab, event);
+    publishTaskButtonClick() {
+      this.$router.push({ path: '/mainpage/myinfo/mypublishtask' });
     }
   },
 };
@@ -86,6 +58,7 @@ export default {
 
 #my-info-page-main {
   width: 100%;
+  margin-bottom: 3%;
 }
 
 
@@ -122,11 +95,6 @@ export default {
   margin-left: 3%;
   width: 20%;
   background-color: white;
-}
-
-.category-sub-title {
-  font-size: 150%;
-  color: gray;
 }
 
 
@@ -192,6 +160,7 @@ export default {
   font-size: 150%;
   color: gray;
   border-block-end: 1px solid gray;
+  margin-bottom: 3%;
 }
 
 /*发布任务按钮*/

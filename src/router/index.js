@@ -5,6 +5,8 @@ import Register from '@/components/Register';
 import MainPage from '@/components/MainPage';
 import Task from '@/components/TaskPage';
 import MyInfo from '@/components/MyInfoPage';
+import MyInfoList from '@/components/MyInfoList';
+import MyPublishTask from '@/components/MyPublishTask';
 
 Vue.use(Router);
 
@@ -41,6 +43,22 @@ export default new Router({
           path: 'myinfo',
           name: 'MyInfo',
           component: MyInfo,
+          children: [
+            {
+              path: '/',
+              redirect: 'myinfolist'
+            },
+            {
+              path: 'myinfolist',
+              name: 'MyInfoList',
+              component: MyInfoList,
+            },
+            {
+              path: 'mypublishtask',
+              name: 'MyPublishTask',
+              component: MyPublishTask
+            }
+          ]
         }
       ]
     }
