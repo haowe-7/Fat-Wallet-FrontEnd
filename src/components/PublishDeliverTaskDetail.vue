@@ -5,7 +5,7 @@
     </div>
     <div>
       <div id='my-publish-task-info-input-box'>
-        <el-form :model="taskForm" ref="taskForm" status-icon :rules="taskRules">
+        <el-form :model="taskForm" ref="taskForm">
           <el-form-item prop="title">
             <el-input v-model="taskForm.title" placeholder="快递单号" autocomplete="off">
             </el-input>
@@ -28,7 +28,7 @@
           v-model="taskForm.intro">
         </el-input>
       </div>
-      <el-button id="my-task-submit-prestep-button" v-on:click="submitTaskPreStepButtonClick" round>上一步</el-button>
+      <el-button id="my-task-submit-button" v-on:click="submitTaskButtonClick" :loading="loading" round>发布</el-button>
     </div>
   </div>
 </template>
@@ -49,13 +49,19 @@ export default {
         maxParticipant: '',
         endTime: '',
         intro: ''
-      }
+      },
+      loading: false
     };
   },
   methods: {
-    submitTaskPreStepButtonClick() {
-      console.log('pre step');
-      this.$router.push({ path: '/mainpage/myinfo/mypublishtask' });
+    submitTaskButtonClick() {
+      console.log('submit');
+      this.loading = true;
+      setTimeout(() => {
+        this.loading = false;
+        this.$router.push({ path: '/mainpage/myinfo/myinfolist' });
+        this.$message.error('这个响应还没写呢');
+      }, 2000);
     }
   },
 };
@@ -84,7 +90,7 @@ export default {
 }
 
 /* 任务提交上一步按钮 */
-#my-task-submit-prestep-button {
+#my-task-submit-button {
   float: right;
   margin-top: 3%;
   margin-bottom: 3%;
