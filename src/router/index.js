@@ -10,6 +10,7 @@ import MyPublishTask from '@/components/MyPublishTask';
 import PublishDeliverTaskDetail from '@/components/PublishDeliverTaskDetail';
 import TaskBreifInfoPage from '@/components/TaskBreifInfoPage';
 import TaskDiscussPage from '@/components/TaskDiscussPage';
+import TaskApplicantPage from '@/components/TaskApplicantPage';
 
 Vue.use(Router);
 
@@ -81,6 +82,11 @@ export default new Router({
               path: 'discuss',
               name: 'TaskDiscussPage',
               component: TaskDiscussPage
+            },
+            {
+              path: 'applicant',
+              name: 'TaskApplicantPage',
+              component: TaskApplicantPage
             }
           ]
         }

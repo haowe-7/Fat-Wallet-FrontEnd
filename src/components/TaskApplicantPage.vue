@@ -1,18 +1,15 @@
 <template>
   <div>
     <div v-for="o in 5" :key="o">
-      <el-card class="discuss-item" shadow="hover">
+      <el-card class="user-item" shadow="hover">
         <div id="user-icon">
           <img src="../assets/background.jpg" />
         </div>
-        <div style="display:inline-block; width:85%;vertical-align:top">
-          <div id="username">SYSUCarey</div>
-          <div id="discuss-text">这么好的问卷么好来一哈么好的然我么么好的问卷么好来一哈么好的然我要来一哈拉么好的问卷么好来一哈么好的然我要来一哈拉好的问卷么好来一哈么好的然我要来一哈拉么好的问卷么好来一哈么好的然我要来一哈拉要来一哈拉</div>
+        <div style="display:inline-block; width:75%; vertical-align:top">
+          <div id="username">Messiah</div>
+          <div id="discuss-text">一个抱紧大佬大腿的程序猿~</div>
         </div>
-        <div id="footer">
-          <span class="footer-item"><i class="el-icon-star-off"></i> 点赞 20</span>
-          <span class="footer-item"><i class="el-icon-edit-outline"></i> 回复 </span>
-        </div>
+        <el-button id="edit-button" round>同意申请</el-button>
       </el-card>
     </div>
   </div>
@@ -37,7 +34,7 @@ export default {
 <style scoped>
 
 /* 卡片item */
-.discuss-item {
+.user-item {
   margin-top: 1%;
   border-radius: 6px;
 }
@@ -67,23 +64,17 @@ export default {
   font-weight: bold;
 }
 
-/* 评论文字 */
+/* 个人签名 */
 #discuss-text {
   margin-top: 1%;
   font-size: 100%;
+  overflow: hidden;
 }
 
-/* 底部footer信息栏 */
-#footer {
-  margin-top: 1%;
-  margin-left: 65px;
+/* 控制按钮 */
+#edit-button {
+  display: inline-block;
+  width: 15%;
 }
-
-.footer-item {
-  margin-right: 10px;
-  cursor: pointer;
-  font-size: 100%;
-}
-
 
 </style>

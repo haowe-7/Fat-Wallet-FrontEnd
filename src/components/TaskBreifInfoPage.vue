@@ -15,12 +15,12 @@
             <el-button class="asso-info-nav-button">评论</el-button>
           </el-badge>
         </router-link>
-        <router-link to="/mainpage/task-breif-info/b">
+        <router-link to="/mainpage/task-breif-info/applicant">
           <el-badge :value="5" class="asso-info-badge"> 
             <el-button class="asso-info-nav-button">申请者</el-button>
           </el-badge>
         </router-link>
-        <router-link to='/mainpage/task-breif-info/c'>
+        <router-link to='/mainpage/task-breif-info/applicant'>
           <el-badge :value="2" class="asso-info-badge"> 
             <el-button class="asso-info-nav-button">参与者</el-button>
           </el-badge>
