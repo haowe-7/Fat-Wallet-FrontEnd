@@ -50,7 +50,7 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 #header {
   border-bottom: 1px solid;
   padding-top: 2%;
