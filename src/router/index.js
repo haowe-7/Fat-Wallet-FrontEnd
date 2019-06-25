@@ -9,6 +9,7 @@ import MyInfoList from '@/components/MyInfoList';
 import MyPublishTask from '@/components/MyPublishTask';
 import PublishDeliverTaskDetail from '@/components/PublishDeliverTaskDetail';
 import TaskBreifInfoPage from '@/components/TaskBreifInfoPage';
+import TaskDiscussPage from '@/components/TaskDiscussPage';
 
 Vue.use(Router);
 
@@ -70,7 +71,18 @@ export default new Router({
         {
           path: 'task-breif-info',
           name: 'TaskBreifInfoPage',
-          component: TaskBreifInfoPage
+          component: TaskBreifInfoPage,
+          children: [
+            {
+              path: '/',
+              redirect: 'discuss'
+            },
+            {
+              path: 'discuss',
+              name: 'TaskDiscussPage',
+              component: TaskDiscussPage
+            }
+          ]
         }
       ]
     }

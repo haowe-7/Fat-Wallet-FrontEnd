@@ -1,13 +1,31 @@
 <template>
   <div id="breif-task-page">
     <el-card class="box-card">
-      <div slot="header" class="clearfix">
-        <span>数据院问卷调查</span>
-        <el-button style="float: right; padding: 3px 0" type="text">申请参加</el-button>
+      <div slot="header">
+        <span style="font-size:120%; font-weight:bold;">数据院问卷调查</span>
+        <el-button style="float: right; font-size:120%; padding: 5px 0; width: 100px;" round>申请参加</el-button>
       </div>
-      <div v-for="o in 5" :key="o" class="text item">
-        <span class="itemTitle">{{itemTitle[o-1]}}</span>
-        <span class="itemText">{{itemText[o-1]}}</span>
+      <div v-for="o in 5" :key="o" class="task-item">
+        <span class="item-title">{{itemTitle[o-1]}}</span>
+        <span class="item-text">{{itemText[o-1]}}</span>
+      </div>
+      <div id="task-asso-info-div">
+        <router-link to="/mainpage/task-breif-info/discuss">
+          <el-badge :value="23" class="asso-info-badge"> 
+            <el-button class="asso-info-nav-button">评论</el-button>
+          </el-badge>
+        </router-link>
+        <router-link to="/mainpage/task-breif-info/b">
+          <el-badge :value="5" class="asso-info-badge"> 
+            <el-button class="asso-info-nav-button">申请者</el-button>
+          </el-badge>
+        </router-link>
+        <router-link to='/mainpage/task-breif-info/c'>
+          <el-badge :value="2" class="asso-info-badge"> 
+            <el-button class="asso-info-nav-button">参与者</el-button>
+          </el-badge>
+        </router-link>
+        <router-view></router-view>
       </div>
     </el-card>
   </div>
@@ -52,9 +70,26 @@ export default {
   border-block-end: 1px solid gray;
 }
 
-.itemTitle {
-  font-size: 120%;
-  margin: 3%;
+/* task任务简述表项item */
+.task-item {
+  margin-bottom: 3%;
 }
+.item-title {
+  font-size: 120%;
+  color: black;
+}
+.item-text {
+  font-size: 120%;
+  color: gray;
+  margin-left: 50px;
+}
+
+/* 任务关联信息如讨论、参与者等nav button */
+.asso-info-nav-button {
+  margin-left: 30px;
+  width: 100px;
+}
+
+
 
 </style>

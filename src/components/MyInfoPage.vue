@@ -132,7 +132,7 @@ export default {
 #edit-user-info-button-div {
   display: inline-block;
   vertical-align: bottom;
-  width: 25%;
+  width: 24%;
   margin-bottom: 2%;
 }
 /*编辑个人资料按钮*/

@@ -19,8 +19,8 @@
             </el-input>
           </el-form-item>
           <el-form-item prop="maxParticipant">
-            <el-input v-model="taskForm.maxParticipant" placeholder="人数" autocomplete="off">
-            </el-input>
+            <el-input-number v-model="taskForm.maxParticipant" @change="handleParticipantChange" :min="1" :max="200" placeholder="人数">
+            </el-input-number>
           </el-form-item>
           <el-form-item prop="endTime">
             <el-date-picker style="width: 100%"
@@ -68,7 +68,7 @@ export default {
         type: '',
         title: '',
         reward: '',
-        maxParticipant: '',
+        maxParticipant: 1,
         endTime: '',
         intro: ''
       }
@@ -99,6 +99,9 @@ export default {
     submitTaskNextStepButtonClick() {
       console.log('next step');
       this.$router.push({ path: '/mainpage/myinfo/publish-deliver-task-detail' });
+    },
+    handleParticipantChange(value) {
+      console.log(value);
     }
   },
 };
