@@ -14,6 +14,9 @@ import TaskApplicantPage from '@/components/TaskApplicantPage';
 import DeliverTaskDetailPage from '@/components/DeliverTaskDetailPage';
 import Edit from '@/components/QuesManage/Edit';
 import Fill from '@/components/QuesManage/Fill';
+import SettingPage from '@/components/SettingPage';
+import PersonalInfoComponent from '@/components/Setting/PersonalInfoComponent';
+import PersonalPrivacyComponent from '@/components/Setting/PersonalPrivacyComponent';
 
 Vue.use(Router);
 
@@ -108,6 +111,27 @@ export default new Router({
           name: 'QuesTaskDetailPage',
           component: Fill,
         },
+        {
+          path: 'setting',
+          name: 'SettingPage',
+          component: SettingPage,
+          children: [
+            {
+              path: '/',
+              redirect: 'info'
+            },
+            {
+              path: 'info',
+              name: 'PersonalInfoComponent',
+              component: PersonalInfoComponent
+            },
+            {
+              path: 'privacy',
+              name: 'PersonalPrivacyComponent',
+              component: PersonalPrivacyComponent
+            }
+          ]
+        }
       ]
     }
   ]

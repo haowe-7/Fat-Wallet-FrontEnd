@@ -18,8 +18,8 @@
         visible-arrow='false'
         trigger="hover">
         <div class="simpleDetail">
-          <p>主页</p>
-          <p>设置</p>
+          <p v-on:click="goToMainPage">主页</p>
+          <p v-on:click="goToSetting">设置</p>
           <p>消息</p>
           <p>退出</p>
         </div>
@@ -43,6 +43,12 @@ export default {
     };
   },
   methods: {
+    goToSetting() {
+      this.$router.push({ path: '/mainpage/setting' });
+    },
+    goToMainPage() {
+      this.$router.push({ path: '/mainpage' });
+    }
   },
   mounted() {
   }
