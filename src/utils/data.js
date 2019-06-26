@@ -1,153 +1,149 @@
-/*
-* @Author: NiceMing
-* @Date:   2018-03-02 18:36:05
-*/
 var list = [
-		{
-			"id": 1,
-			"title": "问卷调查1",
-			"state": 1,
-			"stateName": "发布中",
-			"time": "2018-07-01",
-			"questions": [
-				{
-					"type": "radio",
-					"topic": "单选题",
-					"options": ["选项1","选项2","选项3","选项4"]
-				},
-				{
-					"type": "checkbox",
-					"topic": "多选题",
-					"options": ["选项1","选项2","选项3","选项4"]
-				},
-				{
-					"type": "textarea",
-					"topic": "文本题",
-					"isMandatory": false
-				}
-			]
-		},
-		{
-			"id": 2,
-			"title": "问卷调查2",
-			"state": 0,
-			"stateName": "未发布",
-			"time": "2018-09-01",
-			"questions": [
-				{
-					"type": "radio",
-					"topic": "单选题",
-					"options": ["选项1","选项2","选项3","选项4"]
-				},
-				{
-					"type": "checkbox",
-					"topic": "多选题",
-					"options": ["选项1","选项2","选项3","选项4"]
-				},
-				{
-					"type": "textarea",
-					"topic": "文本题",
-					"isMandatory": false
-				}
-			]
-		},
-		{
-			"id": 3,
-			"title": "问卷调查3",
-			"state": 0,
-			"stateName": "未发布",
-			"time": "2018-06-01",
-			"questions": [
-				{
-					"type": "radio",
-					"topic": "单选题",
-					"options": ["选项1","选项2","选项3","选项4"]
-				},
-				{
-					"type": "checkbox",
-					"topic": "多选题",
-					"options": ["选项1","选项2","选项3","选项4"]
-				},
-				{
-					"type": "textarea",
-					"topic": "文本题",
-					"isMandatory": false
-				}
-			]
-		},
-		{
-			"id": 4,
-			"title": "问卷调查4",
-			"state": 2,
-			"stateName": "已结束",
-			"time": "2018-03-01",
-			"questions": [
-				{
-					"type": "radio",
-					"topic": "单选题",
-					"options": ["选项1","选项2","选项3","选项4"]
-				},
-				{
-					"type": "checkbox",
-					"topic": "多选题",
-					"options": ["选项1","选项2","选项3","选项4"]
-				},
-				{
-					"type": "textarea",
-					"topic": "文本题",
-					"isMandatory": false
-				}
-			]
-		},
-		{
-			"id": 5,
-			"title": "问卷调查5",
-			"state": 2,
-			"stateName": "已结束",
-			"time": "2018-01-01",
-			"questions": [
-				{
-					"type": "radio",
-					"topic": "单选题",
-					"options": ["选项1","选项2","选项3","选项4"]
-				},
-				{
-					"type": "checkbox",
-					"topic": "多选题",
-					"options": ["选项1","选项2","选项3","选项4"]
-				},
-				{
-					"type": "textarea",
-					"topic": "文本题",
-					"isMandatory": false
-				}
-			]
-		},
-		{
-			"id": 6,
-			"title": "问卷调查6",
-			"state": 2,
-			"stateName": "已结束",
-			"time": "2018-01-01",
-			"questions": [
-				{
-					"type": "radio",
-					"topic": "单选题",
-					"options": ["选项1","选项2","选项3","选项4"]
-				},
-				{
-					"type": "checkbox",
-					"topic": "多选题",
-					"options": ["选项1","选项2","选项3","选项4"]
-				},
-				{
-					"type": "textarea",
-					"topic": "文本题",
-					"isMandatory": false
-				}
-			]
-		}
-	];
+  {
+    "id": 1,
+    "title": "问卷调查1",
+    "state": 1,
+    "stateName": "发布中",
+    "time": "2018-07-01",
+    "questions": [
+      {
+        "type": "radio",
+        "topic": "单选题",
+        "options": ["选项1","选项2","选项3","选项4"]
+      },
+      {
+        "type": "checkbox",
+        "topic": "多选题",
+        "options": ["选项1","选项2","选项3","选项4"]
+      },
+      {
+        "type": "textarea",
+        "topic": "文本题",
+        "isMandatory": false
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "问卷调查2",
+    "state": 0,
+    "stateName": "未发布",
+    "time": "2018-09-01",
+    "questions": [
+      {
+        "type": "radio",
+        "topic": "单选题",
+        "options": ["选项1","选项2","选项3","选项4"]
+      },
+      {
+        "type": "checkbox",
+        "topic": "多选题",
+        "options": ["选项1","选项2","选项3","选项4"]
+      },
+      {
+        "type": "textarea",
+        "topic": "文本题",
+        "isMandatory": false
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "问卷调查3",
+    "state": 0,
+    "stateName": "未发布",
+    "time": "2018-06-01",
+    "questions": [
+      {
+        "type": "radio",
+        "topic": "单选题",
+        "options": ["选项1","选项2","选项3","选项4"]
+      },
+      {
+        "type": "checkbox",
+        "topic": "多选题",
+        "options": ["选项1","选项2","选项3","选项4"]
+      },
+      {
+        "type": "textarea",
+        "topic": "文本题",
+        "isMandatory": false
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "问卷调查4",
+    "state": 2,
+    "stateName": "已结束",
+    "time": "2018-03-01",
+    "questions": [
+      {
+        "type": "radio",
+        "topic": "单选题",
+        "options": ["选项1","选项2","选项3","选项4"]
+      },
+      {
+        "type": "checkbox",
+        "topic": "多选题",
+        "options": ["选项1","选项2","选项3","选项4"]
+      },
+      {
+        "type": "textarea",
+        "topic": "文本题",
+        "isMandatory": false
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "title": "问卷调查5",
+    "state": 2,
+    "stateName": "已结束",
+    "time": "2018-01-01",
+    "questions": [
+      {
+        "type": "radio",
+        "topic": "单选题",
+        "options": ["选项1","选项2","选项3","选项4"]
+      },
+      {
+        "type": "checkbox",
+        "topic": "多选题",
+        "options": ["选项1","选项2","选项3","选项4"]
+      },
+      {
+        "type": "textarea",
+        "topic": "文本题",
+        "isMandatory": false
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "问卷调查6",
+    "state": 2,
+    "stateName": "已结束",
+    "time": "2018-01-01",
+    "questions": [
+      {
+        "type": "radio",
+        "topic": "单选题",
+        "options": ["选项1","选项2","选项3","选项4"]
+      },
+      {
+        "type": "checkbox",
+        "topic": "多选题",
+        "options": ["选项1","选项2","选项3","选项4"]
+      },
+      {
+        "type": "textarea",
+        "topic": "文本题",
+        "isMandatory": false
+      }
+    ]
+  }
+];
 
 
 var template = {

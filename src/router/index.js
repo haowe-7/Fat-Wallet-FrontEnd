@@ -13,6 +13,7 @@ import TaskDiscussPage from '@/components/TaskDiscussPage';
 import TaskApplicantPage from '@/components/TaskApplicantPage';
 import DeliverTaskDetailPage from '@/components/DeliverTaskDetailPage';
 import Edit from '@/components/QuesManage/Edit';
+import Fill from '@/components/QuesManage/Fill';
 
 Vue.use(Router);
 
@@ -101,7 +102,12 @@ export default new Router({
           path: 'deliver-task-detail',
           name: 'DeliverTaskDetailPage',
           component: DeliverTaskDetailPage,
-        }
+        },
+        {
+          path: 'ques-task-detail',
+          name: 'QuesTaskDetailPage',
+          component: Fill,
+        },
       ]
     }
   ]

@@ -54,10 +54,11 @@ export default {
         setTimeout(() => {
           this.loading = false;
           this.controlStatus = '查看详情';
-        }, 2000);
+        }, 1000);
       } else if (this.controlStatus === '查看详情') {
         console.log('查看详情');
-        this.$router.push({ path: '/mainpage/deliver-task-detail' });
+        this.$router.push({ path: '/mainpage/ques-task-detail' });
+        // this.$router.push({ path: '/mainpage/deliver-task-detail' });
       }
     }
   },

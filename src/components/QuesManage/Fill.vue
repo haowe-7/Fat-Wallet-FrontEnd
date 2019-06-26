@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import Store from '../store.js';
+import Store from '@/utils/store';
 
 export default {
 	name: 'Fill',
@@ -69,29 +69,29 @@ export default {
 	},
 
 	beforeRouterEnter(to, from, next) {
-		let id = to.params.id;
-		let item = {};
-		if (id !== 0) {
-			let length = Store.fetch().length;
-			if (id < 0 || id > length) {
-				alert('非法路由');
-				next('');
-			}
-			else {
-				item = Store.fetch()[id - 1];
-			}
+		// let id = to.params.id;
+		// let item = {};
+		// if (id !== 0) {
+		// 	let length = Store.fetch().length;
+		// 	if (id < 0 || id > length) {
+		// 		alert('非法路由');
+		// 		next('');
+		// 	}
+		// 	else {
+		// 		item = Store.fetch()[id - 1];
+		// 	}
 
-			if (item.state === 0) {
-				next();
-			}
-			else {
-				alert('非法路由');
-				next('/');
-			}
-		}
-		else {
-			next();
-		}
+		// 	if (item.state === 0) {
+		// 		next();
+		// 	}
+		// 	else {
+		// 		alert('非法路由');
+		// 		next('/');
+		// 	}
+		// }
+		// else {
+		// 	next();
+		// }
 	},
 
 	created() {
@@ -100,9 +100,32 @@ export default {
 
 	methods: {
 		getData() {
-			let id = this.$route.params.id;
-
-			this.quData = Store.fetch()[id - 1];
+			// let id = this.$route.params.id;
+			// this.quData = Store.fetch()[id - 1];
+      this.quData =   {
+        id: 1,
+        title: "问卷调查1",
+        state: 1,
+        stateName: "发布中",
+        time: "2018-07-01",
+        questions: [
+          {
+            type: "radio",
+            topic: "单选题",
+            options: ["选项1","选项2","选项3","选项4"]
+          },
+          {
+            type: "checkbox",
+            topic: "多选题",
+            options: ["选项1","选项2","选项3","选项4"]
+          },
+          {
+            type: "textarea",
+            topic: "文本题",
+            isMandatory: false
+          }
+        ]
+      }
 			this.questions = this.quData.questions;
 			this.questions.forEach((item) => {
 				if (item.type === 'checkbox') {
