@@ -3,16 +3,16 @@
     <el-card class="box-card">
       <div id="task-title">心理系问卷调查</div>
       <div id="content">
-        <img src="../assets/background.jpg"/>
+        <img :src="getImageUrl(taskInfo.image)"/>
         <div id="info">
-          <div class='item'> 发布人：Mason </div>
-          <div class='item'> 任务类型：问卷调查 </div>
-          <div class='item'> 任务报酬：3元/次 </div>
-          <div class='item'> 任务简介：针对大一刚入学新生，主要调查新生对于大学生活的感想，要求填写真实感受。 </div>
+          <div class='item'> 发布人：{{ taskInfo.creator_name }} </div>
+          <div class='item'> 任务类型：{{ getTaskTypeName(taskInfo.task_type) }} </div>
+          <div class='item'> 任务报酬：{{ taskInfo.reward }}元/次 </div>
+          <div class='item'> 任务简介：{{ taskInfo.description }} </div>
         </div>
       </div>
       <div id="footer">
-        <span class='footer-item'><i class="el-icon-edit-outline"></i> 参与 20</span>
+        <span class='footer-item'><i class="el-icon-edit-outline"></i> 参与 {{ taskInfo.participators.length }}</span>
         <span class='footer-item'><i class="el-icon-edit"></i> 评论 50</span>
         <span class='footer-item'><i class="el-icon-star-off"></i> 收藏</span>
         <span class='footer-item'><i class="el-icon-share"></i> 分享</span>
@@ -26,6 +26,7 @@
 
 export default {
   name: 'TaskBlock',
+  props: ['taskInfo'],
   components: {
   },
   data() {
@@ -36,6 +37,18 @@ export default {
     viewTaskClick() {
       console.log('viewTaskClick');
       this.$router.push({ path: '/mainpage/task-breif-info' });
+    },
+    getImageUrl(url) {
+      if (url)
+        return url;
+      return "../assets/background.jpg"
+    },
+    getTaskTypeName(task_type) {
+      switch(task_type) {
+        case 1: return '问卷调查'; break;
+        case 2: return '协会招新'; break;
+        case 3: return '快递代收'; break;
+      }
     }
   },
 };

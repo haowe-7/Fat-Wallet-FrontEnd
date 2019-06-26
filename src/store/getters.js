@@ -4,6 +4,7 @@ const getters = {
   email: state => state.user.info.email,
   role: state => state.user.info.role,
   auth: state => state.user.auth,
+  recommend_task_list: state => state.tasks.recommend_task_list
 };
 
 export default getters;

@@ -1,16 +1,18 @@
 import request from '@/utils/requests';
 
+// 登录
 export function login(username, password) {
   return request({
     url: '/api/login',
     method: 'post',
     data: {
-      username,
-      password
+      username: username,
+      password: password
     }
   });
 }
 
+// 登出
 export function logout() {
   return request({
     url: '/api/logout',
@@ -18,6 +20,7 @@ export function logout() {
   });
 }
 
+// 注册
 export function register(userInfo) {
   return request({
     url: '/api/users/',
@@ -26,6 +29,7 @@ export function register(userInfo) {
   });
 }
 
+// 获取用户信息
 export function getInfo(user_id) {
   return request({
     url: '/api/users/' + user_id || '0',
@@ -33,9 +37,30 @@ export function getInfo(user_id) {
   });
 }
 
+// 获取登录信息
 export function getLoginInfo() {
   return request({
     url: '/api/login',
     method: 'get'
+  });
+}
+
+// 修改用户信息
+export function modifyUser(userInfo) {
+  return request({
+    url: '/api/users/',
+    method: 'patch',
+    data: userInfo
+  });
+}
+
+// 修改密码
+export function modifyPassword(password) {
+  return request({
+    url: '/api/users/',
+    method: 'put',
+    data: {
+      password: password
+    }
   });
 }
