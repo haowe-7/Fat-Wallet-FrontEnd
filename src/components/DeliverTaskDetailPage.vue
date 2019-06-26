@@ -5,8 +5,7 @@
         <span style="font-size:120%; font-weight:bold;">快递任务详情</span>
         <el-button style="float: right; font-size:120%; padding: 5px 0; width: 100px;" :loading="loading" round v-on:click="finishButtonClick">我已完成</el-button>
       </div>
-
-      <el-form :model="taskForm" ref="taskForm">
+      <el-form>
         <el-form-item v-for="o in 3" :key="o" prop="title">
           <el-input v-model="itemText[o-1]" placeholder="详细信息" autocomplete="off" :disabled="true">
             <template slot="prepend">{{itemTitle[o-1]}}</template>
@@ -34,6 +33,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       itemTitle: ['单号', '快递柜', '取件码', '私人信息'],
       itemText: ['16340015', '蜂巢5号柜', '58585858', '宿舍：至善园2号楼528，电话：13324234234']
     };

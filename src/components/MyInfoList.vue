@@ -21,11 +21,11 @@
           </el-tab-pane>
           <el-tab-pane class="user-control-tab-panel" name="comment">
             <span slot="label" class='category-sub-title'>评论</span>
-            评论
+            <TaskDiscussPage></TaskDiscussPage>
           </el-tab-pane>
           <el-tab-pane class="user-control-tab-panel" name="follow">
             <span slot="label" class='category-sub-title'>关注</span>
-            关注
+            <TaskApplicantPage :controlButtonVisible="true" controlButtonText='取消关注'></TaskApplicantPage>
           </el-tab-pane>
           <el-tab-pane class="user-control-tab-panel" name="share">
             <span slot="label" class='category-sub-title'>分享</span>
@@ -39,10 +39,14 @@
 
 <script>
 import TaskBlock from '@/components/TaskBlock';
+import TaskDiscussPage from '@/components/TaskDiscussPage';
+import TaskApplicantPage from '@/components/TaskApplicantPage';
 export default {
   name: 'MyInfoList',
   components: {
-    TaskBlock
+    TaskBlock,
+    TaskDiscussPage,
+    TaskApplicantPage
   },
   data() {
     return {

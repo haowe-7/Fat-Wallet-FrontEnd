@@ -9,7 +9,7 @@
           <div id="username">Messiah</div>
           <div id="discuss-text">一个抱紧大佬大腿的程序猿~</div>
         </div>
-        <el-button id="edit-button" round>同意申请</el-button>
+        <el-button id="edit-button" :class="controlButtonVisible ? '' : 'invisible'" round>{{controlButtonText}}</el-button>
       </el-card>
     </div>
   </div>
@@ -20,6 +20,16 @@ var src = require('../assets/background.jpg');
 export default {
   name: 'TaskDiscussPage',
   components: {
+  },
+  props: {
+    controlButtonVisible: {
+      type: Boolean,
+      default: true
+    }, 
+    controlButtonText: {
+      type: String,
+      default: '同意申请'
+    }
   },
   data() {
     return {
@@ -75,6 +85,10 @@ export default {
 #edit-button {
   display: inline-block;
   width: 15%;
+}
+
+.invisible {
+  display: none !important;
 }
 
 </style>
