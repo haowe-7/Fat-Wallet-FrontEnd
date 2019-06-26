@@ -2,7 +2,7 @@
   <div id="breif-task-page">
     <el-card class="box-card">
       <div slot="header">
-        <span style="font-size:120%; font-weight:bold;">数据院问卷调查</span>
+        <span style="font-size:120%; font-weight:bold;">{{ taskInfo ? taskInfo.title : '' }}</span>
         <el-button style="float: right; font-size:120%; padding: 5px 0; width: 100px;" :loading="loading" round v-on:click="controlButtonClick">{{controlStatus}}</el-button>
       </div>
       <div v-for="o in 5" :key="o" class="task-item">
@@ -11,17 +11,17 @@
       </div>
       <div id="task-asso-info-div">
         <router-link to="/mainpage/task-breif-info/discuss">
-          <el-badge :value="23" class="asso-info-badge"> 
+          <el-badge :value="taskInfo ? taskInfo.num_comments : 0" class="asso-info-badge"> 
             <el-button class="asso-info-nav-button">评论</el-button>
           </el-badge>
         </router-link>
         <router-link to="/mainpage/task-breif-info/applicant">
-          <el-badge :value="5" class="asso-info-badge"> 
+          <el-badge :value="applicant_nums" class="asso-info-badge"> 
             <el-button class="asso-info-nav-button">申请者</el-button>
           </el-badge>
         </router-link>
         <router-link to='/mainpage/task-breif-info/applicant'>
-          <el-badge :value="2" class="asso-info-badge"> 
+          <el-badge :value="participator_nums" class="asso-info-badge"> 
             <el-button class="asso-info-nav-button">参与者</el-button>
           </el-badge>
         </router-link>
@@ -33,17 +33,47 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'TaskBreifInfoPage',
-  components: {
+  beforeMount() {
+    let task_id = this.$route.query.task_id;
+    let Loading = this.$loading({
+      lock: true,
+      text: '正在从数据库获取数据中',
+      spinner: 'el-icon-loading',
+      background: 'rgba(0, 0, 0, 0.7)'
+    });
+    this.$store.dispatch('GetRecommendTasks', 0, 10).then(() => {
+      this.taskInfo = this.RecommendTaskList[0]
+      Loading.close();
+      this.UpdateApplicantNums();
+      this.UpdateParticipatorNums();
+      this.itemText = [
+        this.getTaskTypeName(),
+        this.taskInfo.reward + '元/人',
+        this.taskInfo.max_participate + '人',
+        this.taskInfo.due_time,
+        this.taskInfo.description
+      ]
+    });
   },
   data() {
     return {
       loading: false,
+      taskInfo: null,
+      applicant_nums: 0,
+      participator_nums: 0,
       controlStatus: '申请参加',
       itemTitle: ['类型', '报酬', '人数', '期限', '简介'],
       itemText: ['问卷调查', '1元/人', '20人', '2019-07-01 23:59:59', '针对所有中大学生，调查学生对于计算机专业的认识和看法。']
     };
+  },
+  computed: {
+    ...mapGetters({
+      RecommendTaskList: 'recommend_task_list'
+    })
   },
   methods: {
     controlButtonClick() {
@@ -60,7 +90,34 @@ export default {
         this.$router.push({ path: '/mainpage/ques-task-detail' });
         // this.$router.push({ path: '/mainpage/deliver-task-detail' });
       }
-    }
+    },
+    UpdateApplicantNums () {
+      this.applicant_nums = 0;
+      if (!this.taskInfo)
+        return;
+      for (let p of this.taskInfo.participators) {
+        if (p.status === '申请中') {
+          this.applicant_nums  += 1;
+        }
+      }
+    },
+    UpdateParticipatorNums: function () {
+      this.participator_nums = 0;
+      if (!this.taskInfo)
+        return;
+      for (let p of this.taskInfo.participators) {
+        if (p.status === '进行中') {
+          this.participator_nums += 1;
+        }
+      }
+    },
+    getTaskTypeName() {
+      switch(this.taskInfo.task_type) {
+        case 1: return '问卷调查';
+        case 2: return '协会招新';
+        case 3: return '快递代收';
+      }
+    },
   },
 };
 </script>

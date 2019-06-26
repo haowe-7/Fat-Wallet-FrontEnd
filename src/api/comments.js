@@ -26,7 +26,7 @@ export function deleteComment(comment_id) {
 // 修改评论
 export function modifyComment(comment_id, content) {
   return request({
-    url: 'api/comments',
+    url: '/api/comments',
     method: 'patch',
     data: {
       comment_id: comment_id,
@@ -38,10 +38,7 @@ export function modifyComment(comment_id, content) {
 // 获取评论信息
 export function getComments(task_id) {
   return request({
-    url: 'api/comments',
-    method: 'get',
-    data: {
-      task_id: task_id
-    }
+    url: '/api/comments?task_id=' + task_id,
+    method: 'get'
   });
 }

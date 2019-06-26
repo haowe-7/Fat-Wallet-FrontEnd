@@ -9,10 +9,10 @@
         <span slot="label" class='sub-title'>分类</span>
         <CategoryPage></CategoryPage>
       </el-tab-pane>
-      <el-tab-pane name="group">
+      <!-- <el-tab-pane name="group">
         <span slot="label" class='sub-title'>小组</span>
         小组
-      </el-tab-pane>
+      </el-tab-pane> -->
     </el-tabs>
   </div>
 </template>

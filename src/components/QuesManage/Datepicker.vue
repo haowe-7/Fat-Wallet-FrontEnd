@@ -76,7 +76,7 @@ export default {
       return (val < 10) ? '0' + val : val;
     }
   }
-}
+};
 
 </script>
 

@@ -1,13 +1,13 @@
 <template>
   <div>
-    <div v-for="o in 5" :key="o">
+    <div v-for="comment in comments" :key="comment.id">
       <el-card class="discuss-item" shadow="hover">
         <div id="user-icon">
           <img src="../assets/background.jpg" />
         </div>
         <div style="display:inline-block; width:85%;vertical-align:top">
-          <div id="username">SYSUCarey</div>
-          <div id="discuss-text">这么好的问卷么好来一哈么好的然我么么好的问卷么好来一哈么好的然我要来一哈拉么好的问卷么好来一哈么好的然我要来一哈拉好的问卷么好来一哈么好的然我要来一哈拉么好的问卷么好来一哈么好的然我要来一哈拉要来一哈拉</div>
+          <div id="username">{{comment.user_name}}</div>
+          <div id="discuss-text">{{comment.content}}</div>
         </div>
         <div id="footer">
           <span class="footer-item"><i class="el-icon-star-off"></i> 点赞 20</span>
@@ -19,13 +19,36 @@
 </template>
 
 <script>
+import { getComments } from '@/api/comments'
+
 var src = require('../assets/background.jpg');
+
 export default {
   name: 'TaskDiscussPage',
-  components: {
+  beforeMount() {
+    let task_id = this.$route.query.task_id;
+    let Loading = this.$loading({
+      lock: true,
+      text: '正在从数据库获取数据中',
+      spinner: 'el-icon-loading',
+      background: 'rgba(0, 0, 0, 0.7)'
+    });
+    getComments(task_id).then(response => {
+      const status = response.status;
+      if (status === 200) {
+        console.log(response.data);
+        this.comments = response.data.data;
+        Loading.close();
+      }
+      else
+        throw response.data.error;;
+    }).catch(err => {
+      this.$message.error(err);
+    })
   },
   data() {
     return {
+      comments: [],
       src
     };
   },
