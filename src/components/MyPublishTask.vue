@@ -98,7 +98,10 @@ export default {
     },
     submitTaskNextStepButtonClick() {
       console.log('next step');
-      this.$router.push({ path: '/mainpage/myinfo/publish-deliver-task-detail' });
+      if (this.taskForm.type === "问卷调查")
+        this.$router.push({ path: '/mainpage/myinfo/ques-edit' });
+      else
+        this.$router.push({ path: '/mainpage/myinfo/publish-deliver-task-detail' });
     },
     handleParticipantChange(value) {
       console.log(value);

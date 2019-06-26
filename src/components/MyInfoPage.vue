@@ -20,6 +20,7 @@
         <router-link to="/mainpage/myinfo/myinfolist"></router-link>
         <router-link to="/mainpage/myinfo/mypublishtask"></router-link>
         <router-link to='/mainpage/myinfo/publish-deliver-task-detail'></router-link>
+        <router-link to="/mainpage/myinfo/ques-edit"></router-link>
         <router-view></router-view>
       </div>
       <!-- 导航选择模块 -->

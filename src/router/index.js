@@ -12,6 +12,7 @@ import TaskBreifInfoPage from '@/components/TaskBreifInfoPage';
 import TaskDiscussPage from '@/components/TaskDiscussPage';
 import TaskApplicantPage from '@/components/TaskApplicantPage';
 import DeliverTaskDetailPage from '@/components/DeliverTaskDetailPage';
+import Edit from '@/components/QuesManage/Edit';
 
 Vue.use(Router);
 
@@ -67,6 +68,11 @@ export default new Router({
               path: 'publish-deliver-task-detail',
               name: 'PublishDeliverTaskDetail',
               component: PublishDeliverTaskDetail,
+            },
+            {
+              path: 'ques-edit',
+              name: 'Edit',
+              component: Edit,
             }
           ]
         },
