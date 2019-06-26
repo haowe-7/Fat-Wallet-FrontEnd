@@ -3,7 +3,7 @@
     <el-card class="box-card">
       <div slot="header">
         <span style="font-size:120%; font-weight:bold;">数据院问卷调查</span>
-        <el-button style="float: right; font-size:120%; padding: 5px 0; width: 100px;" round>申请参加</el-button>
+        <el-button style="float: right; font-size:120%; padding: 5px 0; width: 100px;" :loading="loading" round v-on:click="controlButtonClick">{{controlStatus}}</el-button>
       </div>
       <div v-for="o in 5" :key="o" class="task-item">
         <span class="item-title">{{itemTitle[o-1]}}</span>
@@ -39,11 +39,27 @@ export default {
   },
   data() {
     return {
+      loading: false,
+      controlStatus: '申请参加',
       itemTitle: ['类型', '报酬', '人数', '期限', '简介'],
       itemText: ['问卷调查', '1元/人', '20人', '2019-07-01 23:59:59', '针对所有中大学生，调查学生对于计算机专业的认识和看法。']
     };
   },
   methods: {
+    controlButtonClick() {
+      if (this.controlStatus === '申请参加') {
+        console.log('申请参加');
+        this.controlStatus = '申请中';
+        this.loading = true;
+        setTimeout(() => {
+          this.loading = false;
+          this.controlStatus = '查看详情';
+        }, 2000);
+      } else if (this.controlStatus === '查看详情') {
+        console.log('查看详情');
+        this.$router.push({ path: '/mainpage/deliver-task-detail' });
+      }
+    }
   },
 };
 </script>

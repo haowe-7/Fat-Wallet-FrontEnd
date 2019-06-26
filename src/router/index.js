@@ -11,6 +11,7 @@ import PublishDeliverTaskDetail from '@/components/PublishDeliverTaskDetail';
 import TaskBreifInfoPage from '@/components/TaskBreifInfoPage';
 import TaskDiscussPage from '@/components/TaskDiscussPage';
 import TaskApplicantPage from '@/components/TaskApplicantPage';
+import DeliverTaskDetailPage from '@/components/DeliverTaskDetailPage';
 
 Vue.use(Router);
 
@@ -89,6 +90,11 @@ export default new Router({
               component: TaskApplicantPage
             }
           ]
+        },
+        {
+          path: 'deliver-task-detail',
+          name: 'DeliverTaskDetailPage',
+          component: DeliverTaskDetailPage,
         }
       ]
     }
