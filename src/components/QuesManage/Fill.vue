@@ -3,7 +3,7 @@
 		<div class="qu-wrap">
 			<header>
 				<span @click="iterator = backBtn(); iterator.next()">&lt; 返回</span>
-				<p>{{ quData.title }}</p>
+				<p>问卷调查填写</p>
 			</header>
 			<div class="qu-content">
 				<section class="qu-item" v-for="(item, index) in questions">
@@ -55,6 +55,7 @@
 
 <script>
 import Store from '@/utils/store';
+import { getTaskExtra } from '@/api/tasks'
 
 export default {
 	name: 'Fill',
@@ -68,65 +69,21 @@ export default {
 		}
 	},
 
-	beforeRouterEnter(to, from, next) {
-		// let id = to.params.id;
-		// let item = {};
-		// if (id !== 0) {
-		// 	let length = Store.fetch().length;
-		// 	if (id < 0 || id > length) {
-		// 		alert('非法路由');
-		// 		next('');
-		// 	}
-		// 	else {
-		// 		item = Store.fetch()[id - 1];
-		// 	}
-
-		// 	if (item.state === 0) {
-		// 		next();
-		// 	}
-		// 	else {
-		// 		alert('非法路由');
-		// 		next('/');
-		// 	}
-		// }
-		// else {
-		// 	next();
-		// }
-	},
-
-	created() {
-		this.getData();
-	},
-
-	methods: {
-		getData() {
-			// let id = this.$route.params.id;
-			// this.quData = Store.fetch()[id - 1];
-      this.quData =   {
-        id: 1,
-        title: "问卷调查1",
-        state: 1,
-        stateName: "发布中",
-        time: "2018-07-01",
-        questions: [
-          {
-            type: "radio",
-            topic: "单选题",
-            options: ["选项1","选项2","选项3","选项4"]
-          },
-          {
-            type: "checkbox",
-            topic: "多选题",
-            options: ["选项1","选项2","选项3","选项4"]
-          },
-          {
-            type: "textarea",
-            topic: "文本题",
-            isMandatory: false
-          }
-        ]
-      }
-			this.questions = this.quData.questions;
+	beforeMount() {
+		let task_id = this.$route.query.task_id;
+		let Loading = this.$loading({
+			lock: true,
+			text: '正在从数据库获取数据中',
+			spinner: 'el-icon-loading',
+			background: 'rgba(0, 0, 0, 0.7)'
+		});
+		getTaskExtra(task_id).then(response => {
+		const status = response.status;
+		const data = response.data;
+		if (status === 200) {
+			let extra = data.data;
+			this.quData.questions = extra.questions;
+      this.questions = this.quData.questions;
 			this.questions.forEach((item) => {
 				if (item.type === 'checkbox') {
 					item.answer = [];
@@ -135,7 +92,16 @@ export default {
 					item.answer = '';
 				}
 			});
-		},
+			Loading.close();
+		} else {
+			throw data.error;
+		}
+		}).catch(err => {
+      Loading.close();
+      this.$message.error("获取信息失败："+err);
+		})
+	},
+	methods: {
 
 		showPrompt(text) {
 			this.promptText = text;
@@ -169,22 +135,16 @@ export default {
 
 		sendAnswer() {
 			this.getAnswer();
-			this.$router.push({path: '/'});
-			console.log('非正式项目，无需发送用户回答数据，打印出来看看就好');
-			console.log(this.answers);
+      console.log(this.answers);
+			// this.$router.push({path: '/'});
 		},
 
 		*submitBtn() {
 			let text = ``;
-			if (this.quData.state === 0) {
-				text = `问卷尚未发布，无法提交！`;
-				this.iterator = null;
-			}
-			else if (!this.requireValidate()) {
+			if (!this.requireValidate()) {
 				text = `有必填项未填写，无法提交！`;
 				this.iterator = null;
-			}
-			else {
+			} else {
 				text = `确认提交问卷吗？`
 			}
 

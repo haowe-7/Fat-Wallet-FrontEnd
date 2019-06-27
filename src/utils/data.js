@@ -147,22 +147,22 @@ var list = [
 
 
 var template = {
-			radio: {
-					"type": "radio",
-					"topic": "单选题",
-					"options": ["选项1","选项2","选项3","选项4"]
-				},
-			checkbox: {
-					"type": "checkbox",
-					"topic": "多选题",
-					"options": ["选项1","选项2","选项3","选项4"]
-				},
-			textarea: {
-					"type": "textarea",
-					"topic": "文本题",
-					"isMandatory": false
-				}
-		};
+  radio: {
+    "type": "radio",
+    "topic": "单选题",
+    "options": ["选项1","选项2","选项3","选项4"]
+  },
+  checkbox: {
+    "type": "checkbox",
+    "topic": "多选题",
+    "options": ["选项1","选项2","选项3","选项4"]
+  },
+  textarea: {
+    "type": "textarea",
+    "topic": "文本题",
+    "isMandatory": false
+  }
+};
 
 var date = function(year, month) {
 	// 若未传入参数或参数不完整 即获取当月的数据

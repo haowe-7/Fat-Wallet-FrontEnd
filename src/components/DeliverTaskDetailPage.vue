@@ -27,15 +27,45 @@
 </template>
 
 <script>
+import { getTaskExtra } from '@/api/tasks';
+
 export default {
   name: 'DeliverTaskDetailPage',
   components: {
+  },
+  beforeMount() {
+    let task_id = this.$route.query.task_id;
+    let Loading = this.$loading({
+      lock: true,
+      text: '正在从数据库获取数据中',
+      spinner: 'el-icon-loading',
+      background: 'rgba(0, 0, 0, 0.7)'
+    });
+    getTaskExtra(task_id).then(response => {
+      const status = response.status;
+      const data = response.data;
+      if (status === 200) {
+        let extra = data.data;
+        this.itemText = [
+          extra.courier_number,
+          extra.delivery_locker,
+          extra.pick_up_code,
+          extra.private_info
+        ]
+        Loading.close();
+      } else {
+        throw data.error;
+      }
+    }).catch(err => {
+      Loading.close();
+      this.$message.error("获取信息失败："+err);
+    })
   },
   data() {
     return {
       loading: false,
       itemTitle: ['单号', '快递柜', '取件码', '私人信息'],
-      itemText: ['16340015', '蜂巢5号柜', '58585858', '宿舍：至善园2号楼528，电话：13324234234']
+      itemText: ['未知', '未知', '未知', '未知'],
     };
   },
   methods: {

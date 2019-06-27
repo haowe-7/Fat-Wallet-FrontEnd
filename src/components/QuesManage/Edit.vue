@@ -276,7 +276,8 @@ export default {
 				this.errorPrompt(`每份问卷至多10个问题！`);
 				return;
 			}
-			this.questions.push(this.questionTemplate[type]);
+      let ques = JSON.parse(JSON.stringify(this.questionTemplate[type]));
+			this.questions.push(ques);
 		},
 
 		saveData() {

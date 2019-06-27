@@ -37,3 +37,11 @@ export function getTaskInfo(queryJson) {
     method: 'get',
   });
 }
+
+// 获取任务具体内容
+export function getTaskExtra(task_id) {
+  return request({
+    url: '/api/tasks/extra?tasl_id='+task_id,
+    method: 'get',
+  })
+}
