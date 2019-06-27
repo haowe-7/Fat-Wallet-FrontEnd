@@ -81,7 +81,7 @@ export default {
         this.taskListAsCreator = response.data.data;
       }
       else
-        throw response.data.error;;
+        throw response.data.error;
     }).catch(err => {
       this.$message.error(err);
     });
@@ -94,7 +94,7 @@ export default {
         this.taskListAsParticipator = response.data.data;
       }
       else
-        throw response.data.error;;
+        throw response.data.error;
     }).catch(err => {
       this.$message.error(err);
     });

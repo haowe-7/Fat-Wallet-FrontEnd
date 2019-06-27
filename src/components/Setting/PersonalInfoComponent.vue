@@ -52,30 +52,64 @@
 </template>
 
 <script>
+import { getInfo } from '@/api/users';
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'PersonalInfoComponent',
   components: {
+  },
+  beforeMount() {
+    // let Loading = this.$loading({
+    //   lock: true,
+    //   text: '正快马加鞭帮小主查询',
+    //   spinner: 'el-icon-loading',
+    //   background: 'rgba(0, 0, 0, 0.7)'
+    // });
+    // console.log(this.user_id);
+    // let queryJson = {
+    //   user_id:this.user_id
+    // }
+    // console.log(queryJson);
+    // getInfo(queryJson).then(response => {
+    //   const status = response.status;
+    //   if (status === 200) {
+    //     console.log(queryJson + 'code:200');
+    //     console.log(response.data);
+    //     this.userInfoForm = response.data.data;
+    //     Loading.close();
+    //   }
+    //   else
+    //     throw response.data.error;
+    // }).catch(err => {
+    //   this.$message.error(err);
+    // });
   },
   data() {
     return {
       controlStatus: '确认更改',
       imageUrl: '',
-      userInfoForm: {
-        user_id: '',
-        username: '',
-        password: '',
-        student_id: '',
-        phone: '',
-        major: '',
-        email: '',
-        nickname: '',
-        intro: '',
-        avator: ''
-      }
+      userInfoForm: []
+      // userInfoForm: {
+      //   username: '',
+      //   password: '',
+      //   student_id: '',
+      //   phone: '',
+      //   major: '',
+      //   email: '',
+      //   nickname: '',
+      //   intro: '',
+      //   avator: ''
+      // }
     };
   },
   methods: {
   },
+  computed: {
+    ...mapGetters({
+      user_id: 'user_id'
+    })
+  }
 };
 </script>
 

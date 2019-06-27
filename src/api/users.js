@@ -30,9 +30,9 @@ export function register(userInfo) {
 }
 
 // 获取用户信息
-export function getInfo(user_id) {
+export function getInfo(queryJson) {
   return request({
-    url: '/api/users/' + user_id || '0',
+    url: '/api/users?' + json2queryString(queryJson),
     method: 'get'
   });
 }
