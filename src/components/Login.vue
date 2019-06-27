@@ -20,6 +20,7 @@
 
 <script>
 import PasswordBackDialog from '@/components/PasswordBackDialog';
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Login',

@@ -21,8 +21,6 @@
 <script>
 import { getComments } from '@/api/comments'
 
-var src = require('../assets/background.jpg');
-
 export default {
   name: 'TaskDiscussPage',
   beforeMount() {
@@ -31,7 +29,7 @@ export default {
       lock: true,
       text: '正在从数据库获取数据中',
       spinner: 'el-icon-loading',
-      background: 'rgba(0, 0, 0, 0.7)'
+      // background: 'rgba(0, 0, 0, 0.7)'
     });
     getComments({
       task_id: task_id
@@ -51,7 +49,6 @@ export default {
   data() {
     return {
       comments: [],
-      src
     };
   },
   methods: {

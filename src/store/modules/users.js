@@ -1,6 +1,6 @@
 import { login, logout, register, getInfo, getLoginInfo } from '@/api/users';
 
-const user = {
+const users = {
   state: {
     info: {
       user_id: null,
@@ -118,8 +118,8 @@ const user = {
           resolve();
         }).catch((err) => reject(err));
       });
-    }
+    },
   }
 };
 
-export default user;
+export default users;

@@ -88,7 +88,6 @@ export default {
       } else if (this.controlStatus === '查看详情') {
         console.log('查看详情');
         let task_id = this.$route.query.task_id;
-
         this.$router.push({ path: '/mainpage/ques-task-detail?task_id='+task_id });
         // this.$router.push({ path: '/mainpage/deliver-task-detail?task_id='+task_id });
       }

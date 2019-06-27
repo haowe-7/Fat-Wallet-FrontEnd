@@ -1,9 +1,9 @@
 const getters = {
-  user_id: state => state.user.info.user_id,
-  username: state => state.user.info.username,
-  email: state => state.user.info.email,
-  role: state => state.user.info.role,
-  auth: state => state.user.auth,
+  user_id: state => state.users.info.user_id,
+  username: state => state.users.info.username,
+  email: state => state.users.info.email,
+  role: state => state.users.info.role,
+  auth: state => state.users.auth,
   recommend_task_list: state => state.tasks.recommend_task_list
 };
 

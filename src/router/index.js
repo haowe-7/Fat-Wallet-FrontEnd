@@ -11,6 +11,7 @@ import PublishDeliverTaskDetail from '@/components/PublishDeliverTaskDetail';
 import TaskBreifInfoPage from '@/components/TaskBreifInfoPage';
 import TaskDiscussPage from '@/components/TaskDiscussPage';
 import TaskApplicantPage from '@/components/TaskApplicantPage';
+import TaskParticipatesPage from '@/components/TaskParticipatesPage';
 import DeliverTaskDetailPage from '@/components/DeliverTaskDetailPage';
 import Edit from '@/components/QuesManage/Edit';
 import Fill from '@/components/QuesManage/Fill';
@@ -98,6 +99,11 @@ export default new Router({
               path: 'applicant',
               name: 'TaskApplicantPage',
               component: TaskApplicantPage
+            },
+            {
+              path: 'participator',
+              name: 'TaskParticipatesPage',
+              component: TaskParticipatesPage
             }
           ]
         },
