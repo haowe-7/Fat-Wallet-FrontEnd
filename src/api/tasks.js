@@ -10,17 +10,6 @@ export function createTask(taskInfo) {
   });
 }
 
-// 发布任务
-export function releaseTask(task_id) {
-  return request({
-    url: '/api/tasks/open',
-    method: 'post',
-    data: {
-      task_id: task_id
-    }
-  });
-}
-
 // 关闭任务
 export function closeTask(task_id) {
   return request({

@@ -5,17 +5,17 @@
     </div>
     <div>
       <div id='my-publish-task-info-input-box'>
-        <el-form :model="taskForm" ref="taskForm">
-          <el-form-item prop="title">
-            <el-input v-model="taskForm.title" placeholder="快递单号" autocomplete="off">
+        <el-form :model="extra" ref="extra">
+          <el-form-item prop="courier_number">
+            <el-input v-model="extra.courier_number" placeholder="快递单号" autocomplete="off">
             </el-input>
           </el-form-item>
-          <el-form-item prop="reward">
-            <el-input v-model="taskForm.reward" placeholder="快递柜" autocomplete="off">
+          <el-form-item prop="delivery_locker">
+            <el-input v-model="extra.delivery_locker" placeholder="快递柜" autocomplete="off">
             </el-input>
           </el-form-item>
-          <el-form-item prop="maxParticipant">
-            <el-input v-model="taskForm.maxParticipant" placeholder="取件密码" autocomplete="off">
+          <el-form-item prop="pick_up_code">
+            <el-input v-model="extra.pick_up_code" placeholder="取件码" autocomplete="off">
             </el-input>
           </el-form-item>
         </el-form>
@@ -25,7 +25,7 @@
           type="textarea"
           :autosize="{ minRows: 3, maxRows: 5}"
           placeholder="私人信息(如宿舍信息，个人联系方式)"
-          v-model="taskForm.intro">
+          v-model="extra.private_info">
         </el-input>
       </div>
       <el-button id="my-task-submit-button" v-on:click="submitTaskButtonClick" :loading="loading" round>发布</el-button>
@@ -34,21 +34,17 @@
 </template>
 
 <script>
-
 export default {
   name: 'PublishDeliverTaskDetail',
   components: {
   },
   data() {
     return {
-      imageUrl: '',
-      taskForm: {
-        type: '',
-        title: '',
-        reward: '',
-        maxParticipant: '',
-        endTime: '',
-        intro: ''
+      extra: {
+        courier_number: '',
+        delivery_locker: '',
+        pick_up_code: '',
+        private_info: ''
       },
       loading: false
     };
@@ -57,13 +53,20 @@ export default {
     submitTaskButtonClick() {
       console.log('submit');
       this.loading = true;
-      setTimeout(() => {
+      this.$store.dispatch('UpDateExtra', this.extra);
+      this.$store.dispatch('SubmitTaskForm').then(() => {
         this.loading = false;
-        this.$router.push({ path: '/mainpage/myinfo/myinfolist' });
         this.$message('成功发布任务');
-      }, 2000);
+        setTimeout(() => {
+          this.$router.push({ path: '/mainpage/myinfo/myinfolist' });
+        }, 500);
+      }).catch(err => {
+        this.loading = false;
+        this.$message.error('任务发布失败：'+err);
+      })
+
     }
-  },
+  }
 };
 </script>
 

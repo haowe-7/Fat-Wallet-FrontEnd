@@ -3,7 +3,7 @@
     <el-card class="box-card">
       <div id="task-title">{{ taskInfo.title }}</div>
       <div id="content">
-        <img :src="getImageUrl(taskInfo.image)"/>
+        <img :src="getImageUrl()"/>
         <div id="info" v-on:click="viewTaskClick">
           <div class='item'> 发布人：{{ taskInfo.creator_name }} </div>
           <div class='item'> 任务类型：{{ getTaskTypeName() }} </div>
@@ -49,9 +49,9 @@ export default {
     viewTaskClick() {
       this.$router.push({ path: '/mainpage/task-breif-info?task_id='+this.taskInfo.task_id });
     },
-    getImageUrl(url) {
-      if (url)
-        return url;
+    getImageUrl() {
+      if (this.taskInfo && this.taskInfo.image)
+        return this.taskInfo.image;
       return "../assets/background.jpg"
     },
     getTaskTypeName() {

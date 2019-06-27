@@ -8,9 +8,9 @@
         <el-form :model="taskForm" ref="taskForm">
           <el-form-item prop="title">
             <el-input v-model="taskForm.title" placeholder="标题" autocomplete="off">
-              <el-select v-model="taskForm.type" slot="prepend" placeholder="类型">
-                <el-option label="问卷调查" value="问卷调查"></el-option>
-                <el-option label="快递代领" value="快递代领"></el-option>
+              <el-select v-model="taskForm.task_type" slot="prepend" placeholder="类型">
+                <el-option label="问卷调查" value=1></el-option>
+                <el-option label="快递代领" value=3></el-option>
               </el-select>
             </el-input>
           </el-form-item>
@@ -18,13 +18,13 @@
             <el-input v-model="taskForm.reward" placeholder="报酬(元/份)" autocomplete="off">
             </el-input>
           </el-form-item>
-          <el-form-item prop="maxParticipant">
-            <el-input-number v-model="taskForm.maxParticipant" @change="handleParticipantChange" :min="1" :max="200" placeholder="人数">
+          <el-form-item prop="max_participant">
+            <el-input-number v-model="taskForm.max_participant" @change="handleParticipantChange" :min="1" :max="200" placeholder="人数">
             </el-input-number>
           </el-form-item>
-          <el-form-item prop="endTime">
+          <el-form-item prop="due_time">
             <el-date-picker style="width: 100%"
-              v-model="taskForm.endTime"
+              v-model="taskForm.due_time"
               type="datetime"
               placeholder="选择任务期限日期与时间">
             </el-date-picker>
@@ -38,7 +38,7 @@
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload">
-          <img v-if="imageUrl" :src="imageUrl" class="avatar">
+          <img v-if="taskForm.image" :src="taskForm.image" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </div>
@@ -47,7 +47,7 @@
           type="textarea"
           :autosize="{ minRows: 3, maxRows: 5}"
           placeholder="请输入简介"
-          v-model="taskForm.intro">
+          v-model="taskForm.description">
         </el-input>
       </div>
       <el-button id="my-task-submit-nextstep-button" v-on:click="submitTaskNextStepButtonClick" round>下一步</el-button>
@@ -63,14 +63,15 @@ export default {
   },
   data() {
     return {
-      imageUrl: '',
       taskForm: {
-        type: '',
+        task_type: null,
         title: '',
         reward: '',
-        maxParticipant: 1,
-        endTime: '',
-        intro: ''
+        max_participant: 1,
+        due_time: '',
+        description: '',
+        image: null,
+        extra: null,
       }
     };
   },
@@ -79,13 +80,9 @@ export default {
       this.$router.push({ path: '/mainpage/myinfo/mypublishtask' });
     },
     handleAvatarSuccess(res, file) {
-      console.log('success');
-      this.imageUrl = URL.createObjectURL(file.raw);
-      console.log(this.imageUrl);
+      this.taskForm.image = URL.createObjectURL(file.raw);
     },
     beforeAvatarUpload(file) {
-      console.log('before');
-      console.log(file.raw);
       const isJPG = file.type === 'image/jpeg';
       const isLt2M = file.size / 1024 / 1024 < 2;
       if (!isJPG) {
@@ -97,8 +94,8 @@ export default {
       return isJPG && isLt2M;
     },
     submitTaskNextStepButtonClick() {
-      console.log('next step');
-      if (this.taskForm.type === "问卷调查")
+      this.$store.dispatch('UpDateTaskForm', this.taskForm);
+      if (this.taskForm.task_type == 1)
         this.$router.push({ path: '/mainpage/myinfo/ques-edit' });
       else
         this.$router.push({ path: '/mainpage/myinfo/publish-deliver-task-detail' });

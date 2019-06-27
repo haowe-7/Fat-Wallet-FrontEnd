@@ -10,7 +10,8 @@
         <div id="user-intro">一个抱紧大佬大腿的程序猿~</div>
       </div>
       <div id="edit-user-info-button-div">
-        <el-button id="edit-user-info-button" round="">编辑个人资料</el-button>
+        <el-button id="edit-user-info-button" 
+         v-on:click="EditButtonClick" round="">编辑个人资料</el-button>
       </div>
     </div>
     <!-- 下方控制模块 -->
@@ -51,6 +52,9 @@ export default {
   methods: {
     publishTaskButtonClick() {
       this.$router.push({ path: '/mainpage/myinfo/mypublishtask' });
+    },
+    EditButtonClick() {
+      this.$router.push({ path: '/mainpage/setting/info' });
     }
   },
 };

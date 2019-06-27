@@ -33,7 +33,9 @@ export default {
       spinner: 'el-icon-loading',
       background: 'rgba(0, 0, 0, 0.7)'
     });
-    getComments(task_id).then(response => {
+    getComments({
+      task_id: task_id
+    }).then(response => {
       const status = response.status;
       if (status === 200) {
         console.log(response.data);

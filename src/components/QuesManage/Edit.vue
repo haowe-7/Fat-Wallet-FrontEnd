@@ -309,17 +309,23 @@ export default {
 		},
 
 		*releaseBtn() {
-			yield this.showPrompt(`确认要保存并发布问卷？`);
+			yield this.showPrompt(`确认要发布问卷？`);
 			yield (() => {
 				this.quData.state = 1;
 				this.quData.stateName = '发布中';
 				this.saveData();
 			})();
 			yield (() => {
-        this.$message({
-          message: '发布成功！！',
-          type: 'success'
-        });
+        console.log(this.quData);
+        this.$store.dispatch('UpDateExtra', this.quData);
+        this.$store.dispatch('SubmitTaskForm').then(() => {
+          this.$message({
+            message: '发布成功！！',
+            type: 'success'
+          });
+        }).catch(err => {
+          this.$message.error('发布失败：'+err);
+        } )
         this.$router.push({path: '/mainpage/myinfo/myinfolist'});
       })();
 		}

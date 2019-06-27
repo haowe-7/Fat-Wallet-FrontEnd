@@ -1,4 +1,5 @@
 import request from '@/utils/requests';
+import json2queryString from '@/utils/urls';
 
 // 创建评论
 export function createComment(task_id, content) {
@@ -35,10 +36,11 @@ export function modifyComment(comment_id, content) {
   });
 }
 
-// 获取评论信息
-export function getComments(task_id) {
+// 根据任务ID获取评论信息
+export function getComments(queryJson) {
   return request({
-    url: '/api/comments?task_id=' + task_id,
+    url: '/api/comments?' + json2queryString(queryJson),
     method: 'get'
   });
 }
+
