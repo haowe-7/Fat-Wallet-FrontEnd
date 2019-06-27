@@ -20,7 +20,7 @@
             <el-button class="asso-info-nav-button">申请者</el-button>
           </el-badge>
         </router-link>
-        <router-link to='/mainpage/task-breif-info/applicant'>
+        <router-link to='/mainpage/task-breif-info/participator'>
           <el-badge :value="participator_nums" class="asso-info-badge"> 
             <el-button class="asso-info-nav-button">参与者</el-button>
           </el-badge>
