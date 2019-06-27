@@ -40,10 +40,22 @@ export default {
       background: 'rgba(0, 0, 0, 0.7)'
     });
 
-    getTaskInfo(this.queryJsons[0]).then(response => {
+    let queryJsons = [
+      {
+        task_type:1
+      },
+      {
+        task_type:2
+      },
+      {
+        task_type:3
+      }
+    ];
+
+    getTaskInfo(queryJsons[0]).then(response => {
       const status = response.status;
       if (status === 200) {
-        console.log(this.queryJsons[0] + 'code:200');
+        console.log(queryJsons[0] + 'code:200');
         console.log(response.data);
         this.taskListWithType1 = response.data.data;
       }
@@ -53,10 +65,10 @@ export default {
       this.$message.error(err);
     })
 
-    getTaskInfo(this.queryJsons[1]).then(response => {
+    getTaskInfo(queryJsons[1]).then(response => {
       const status = response.status;
       if (status === 200) {
-        console.log(this.queryJsons[1] + 'code:200');
+        console.log(queryJsons[1] + 'code:200');
         console.log(response.data);
         this.taskListWithType2 = response.data.data;
       }
@@ -66,10 +78,10 @@ export default {
       this.$message.error(err);
     })
 
-    getTaskInfo(this.queryJsons[2]).then(response => {
+    getTaskInfo(queryJsons[2]).then(response => {
       const status = response.status;
       if (status === 200) {
-        console.log(this.queryJsons[2] + 'code:200');
+        console.log(queryJsons[2] + 'code:200');
         console.log(response.data);
         this.taskListWithType3 = response.data.data;
         Loading.close();
@@ -82,7 +94,6 @@ export default {
   },
   data() {
     return {
-      queryJsons: ['{task_type:1}', '{task_type:2}', '{task_type:3}'],
       activeName: 'questionnaire',
       taskListWithType1: [],
       taskListWithType2: [],
