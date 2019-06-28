@@ -7,22 +7,22 @@
     <div id='user-info-input-box'>
         <el-form :model="userInfoForm" ref="userInfoForm" class="user-info-form-item">
           <el-form-item prop="username">
-            <el-input v-model="userInfoForm.username" placeholder="Mason" autocomplete="off">
+            <el-input v-model="userInfoForm.username" placeholder="姓名" autocomplete="off">
               <template slot="prepend">姓名</template>
             </el-input>
           </el-form-item>
           <el-form-item prop="student_id">
-            <el-input v-model="userInfoForm.student_id" placeholder="16340015" autocomplete="off">
+            <el-input v-model="userInfoForm.student_id" placeholder="学号" autocomplete="off">
               <template slot="prepend">学号</template>
             </el-input>
           </el-form-item>
           <el-form-item prop="major">
-            <el-input v-model="userInfoForm.major" placeholder="软件工程" autocomplete="off">
+            <el-input v-model="userInfoForm.major" placeholder="专业" autocomplete="off">
               <template slot="prepend">专业</template>
             </el-input>
           </el-form-item>
           <el-form-item prop="nickname">
-            <el-input v-model="userInfoForm.nickname" placeholder="中大划水怪" autocomplete="off">
+            <el-input v-model="userInfoForm.nickname" placeholder="昵称" autocomplete="off">
               <template slot="prepend">昵称</template>
             </el-input>
           </el-form-item>
@@ -33,10 +33,8 @@
         <el-upload
           class="avatar-uploader"
           action="https://jsonplaceholder.typicode.com/posts/"
-          :show-file-list="false"
-          :on-success="handleAvatarSuccess"
-          :before-upload="beforeAvatarUpload">
-          <img v-if="imageUrl" :src="imageUrl" class="avatar">
+          :show-file-list="false">
+          <img v-if="userInfoForm.avatar" :src="userInfoForm.avatar" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </div>
@@ -45,14 +43,14 @@
           type="textarea"
           :autosize="{ minRows: 3, maxRows: 5}"
           placeholder="封面宣言"
-          v-model="userInfoForm.intro">
+          v-model="userInfoForm.profile">
         </el-input>
       </div>
   </div>
 </template>
 
 <script>
-import { getInfo } from '@/api/users';
+import { getInfo, modifyUser } from '@/api/users';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -60,50 +58,72 @@ export default {
   components: {
   },
   beforeMount() {
-    // let Loading = this.$loading({
-    //   lock: true,
-    //   text: '正快马加鞭帮小主查询',
-    //   spinner: 'el-icon-loading',
-    //   background: 'rgba(0, 0, 0, 0.7)'
-    // });
-    // console.log(this.user_id);
-    // let queryJson = {
-    //   user_id:this.user_id
-    // }
-    // console.log(queryJson);
-    // getInfo(queryJson).then(response => {
-    //   const status = response.status;
-    //   if (status === 200) {
-    //     console.log(queryJson + 'code:200');
-    //     console.log(response.data);
-    //     this.userInfoForm = response.data.data;
-    //     Loading.close();
-    //   }
-    //   else
-    //     throw response.data.error;
-    // }).catch(err => {
-    //   this.$message.error(err);
-    // });
+    const Loading = this.$loading({
+      lock: true,
+      text: '正快马加鞭帮小主查询',
+      spinner: 'el-icon-loading',
+      background: 'rgba(0, 0, 0, 0.7)'
+    });
+    const queryJson = {
+      user_id: this.user_id
+    };
+    getInfo(queryJson).then(response => {
+      const status = response.status;
+      if (status === 200) {
+        this.userInfoForm = response.data.data[0];
+        Loading.close();
+      } else {
+        throw response.data.error;
+      }
+    }).catch(err => {
+      this.$message.error(err);
+    });
   },
   data() {
     return {
       controlStatus: '确认更改',
       imageUrl: '',
-      userInfoForm: []
-      // userInfoForm: {
-      //   username: '',
-      //   password: '',
-      //   student_id: '',
-      //   phone: '',
-      //   major: '',
-      //   email: '',
-      //   nickname: '',
-      //   intro: '',
-      //   avator: ''
-      // }
+      loading: false,
+      userInfoForm: {
+        username: '',
+        password: '',
+        student_id: '',
+        phone: '',
+        major: '',
+        email: '',
+        nickname: '',
+        profile: '',
+        avator: null
+      }
     };
   },
   methods: {
+    controlButtonClick: function() {
+      this.$confirm('确定修改用户个人信息?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+      }).then(() => {
+        this.loading = true;
+        this.controlStatus = '上传中';
+        modifyUser(this.userInfoForm)
+          .then(response => {
+            const status = response.status;
+            if (status === 200) {
+              this.$message.success("修改信息上传成功");
+            } else {
+              throw response.data.error;
+            }
+          })
+          .catch(err => {
+            this.$message.error("上传修改信息失败：" + error);
+          })
+          .finally(() => {
+            this.loading = false;
+            this.controlStatus = '确认修改';
+          });
+      });
+    }
   },
   computed: {
     ...mapGetters({

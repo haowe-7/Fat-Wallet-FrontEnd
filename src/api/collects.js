@@ -25,7 +25,7 @@ export function deleteCollect(task_id) {
 // 获取收藏信息
 export function getCollects(user_id, task_id) {
   return request({
-    url: '/api/collects?user_id='+user_id+'task_id='+task_id,
+    url: '/api/collects?user_id=' + user_id + 'task_id=' + task_id,
     method: 'get'
   });
 }

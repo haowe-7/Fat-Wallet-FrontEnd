@@ -1,4 +1,4 @@
-import { createTask, closeTask, modifyTask, getTaskInfo } from '@/api/tasks';
+import { createTask, getTaskInfo } from '@/api/tasks';
 
 const tasks = {
   state: {
@@ -69,7 +69,7 @@ const tasks = {
           }
         }).catch(error => {
           reject(error);
-        })
+        });
       });
     }
   }

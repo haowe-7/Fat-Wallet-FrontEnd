@@ -62,9 +62,8 @@ export default {
         }, 500);
       }).catch(err => {
         this.loading = false;
-        this.$message.error('任务发布失败：'+err);
-      })
-
+        this.$message.error('任务发布失败：' + err);
+      });
     }
   }
 };

@@ -39,7 +39,7 @@ export default {
       dates: [],
       month: undefined,
       year: undefined
-    }
+    };
   },
 
   mounted() {
@@ -57,7 +57,7 @@ export default {
         year--;
         month = 11;
       }
-      if (month > 11){
+      if (month > 11) {
         year++;
         month = 0;
       }
@@ -68,7 +68,7 @@ export default {
     },
 
     returnDate(day) {
-      let date = `${this.year}-${this.formatDate(this.month)}-${this.formatDate(day)}`;
+      const date = `${this.year}-${this.formatDate(this.month)}-${this.formatDate(day)}`;
       this.$emit('sendDate', date);
     },
 

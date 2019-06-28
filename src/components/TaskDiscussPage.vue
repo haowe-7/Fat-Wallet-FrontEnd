@@ -19,13 +19,13 @@
 </template>
 
 <script>
-import { getComments } from '@/api/comments'
+import { getComments } from '@/api/comments';
 
 export default {
   name: 'TaskDiscussPage',
   beforeMount() {
-    let task_id = this.$route.query.task_id;
-    let Loading = this.$loading({
+    const task_id = this.$route.query.task_id;
+    const Loading = this.$loading({
       lock: true,
       text: '正在从数据库获取数据中',
       spinner: 'el-icon-loading',
@@ -39,12 +39,12 @@ export default {
         console.log(response.data);
         this.comments = response.data.data;
         Loading.close();
+      } else {
+        throw response.data.error;
       }
-      else
-        throw response.data.error;;
     }).catch(err => {
       this.$message.error(err);
-    })
+    });
   },
   data() {
     return {

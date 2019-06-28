@@ -4,9 +4,7 @@
       <div class="nav">
         <el-menu
           default-active="2"
-          class="el-menu-vertical-demo"
-          @open="handleOpen"
-          @close="handleClose">
+          class="el-menu-vertical-demo">
           <el-menu-item index="1" class="nav-menu-item">
             <i class="el-icon-setting"></i>
             <span slot="title">设置</span>

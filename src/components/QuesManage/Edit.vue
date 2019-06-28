@@ -107,35 +107,35 @@ import Datepicker from './Datepicker.vue';
 import Data from '@/utils/data';
 
 export default {
-	name: 'Edit',
-	components: {
-		'date-components': Datepicker
-	},
-	data() {
-		return {
-			index: '',
-			quData: {},
-			questions: [],
-			questionTemplate:{},
-			quList: [],
-			date: '',
-			title: '',
-			_title: '',
-			topic: '',
-			_topic: '',
-			optionText: '',
-			_optionText: '',
-			curIndex: '',
-			curOptIndex: '',
-			promptText: '',
-			iterator: {},
-			isAdding: false,
-			titleEditing: false,
-			topicEditing: false,
-			isShowPrompt: false,
-			isShowDatepicker: false,
-		}
-	},
+  name: 'Edit',
+  components: {
+    'date-components': Datepicker
+  },
+  data() {
+    return {
+      index: '',
+      quData: {},
+      questions: [],
+      questionTemplate:{},
+      quList: [],
+      date: '',
+      title: '',
+      _title: '',
+      topic: '',
+      _topic: '',
+      optionText: '',
+      _optionText: '',
+      curIndex: '',
+      curOptIndex: '',
+      promptText: '',
+      iterator: {},
+      isAdding: false,
+      titleEditing: false,
+      topicEditing: false,
+      isShowPrompt: false,
+      isShowDatepicker: false,
+    }
+  },
 
 	beforeRouterEnter(to, from, next) {
 	},
@@ -211,11 +211,11 @@ export default {
 			this.questions[index].options[optIndex] = this.optionText;
 		},
 
-		switchItem(index, array) {
-			this.optIndex = '';
-			this.curIndex = '';
+    switchItem(index, array) {
+      this.optIndex = '';
+      this.curIndex = '';
 
-			let arr = array.splice(index, 2);
+      const arr = array.splice(index, 2);
 			array.splice(index , 0, ...arr.reverse());
 		},
 

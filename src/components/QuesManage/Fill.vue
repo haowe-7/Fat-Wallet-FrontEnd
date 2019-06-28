@@ -11,10 +11,10 @@
 						<span v-if="item.isMandatory"> *</span>
 					</h3>
 					<textarea rows="8"
-						      cols="80"
-					          v-if="item.type === 'textarea'"
-					          v-model="item.answer"
-					          :required="item.isMandatory">
+            cols="80"
+            v-if="item.type === 'textarea'"
+            v-model="item.answer"
+            :required="item.isMandatory">
 					</textarea>
 					<ul v-else class="options-list">
 						<li v-for="(option, optIndex) in item.options">
@@ -55,7 +55,7 @@
 
 <script>
 import Store from '@/utils/store';
-import { getTaskExtra } from '@/api/tasks'
+import { getTaskExtra } from '@/api/tasks';
 
 export default {
 	name: 'Fill',
@@ -101,63 +101,63 @@ export default {
       this.$message.error("获取信息失败："+err);
 		})
 	},
-	methods: {
+  
+  methods: {
 
-		showPrompt(text) {
-			this.promptText = text;
-			this.isShowPrompt = true;
-		},
+    showPrompt(text) {
+      this.promptText = text;
+      this.isShowPrompt = true;
+    },
 
-		checkboxAnswer(event, index, answer) {
-			if (event.target.checked) {
-				answer.push(index);
-			}
-			else {
-				answer.splice(answer.indexOf(index), 1);
-			}
-		},
+    checkboxAnswer(event, index, answer) {
+      if (event.target.checked) {
+        answer.push(index);
+      } else {
+        answer.splice(answer.indexOf(index), 1);
+      }
+    },
 
-		requireValidate() {
-			let textareas = document.querySelectorAll('textarea');
-			return [].every.call(textareas, item => {
-				if (item.hasAttribute('required') && item.value.trim() === '') {
-					return false;
-				}
-				return true;
-			})
-		},
+    requireValidate() {
+      const textareas = document.querySelectorAll('textarea');
+      return [].every.call(textareas, item => {
+        if (item.hasAttribute('required') && item.value.trim() === '') {
+          return false;
+        }
+        return true;
+      });
+    },
 
-		getAnswer() {
-			this.questions.forEach((item, index) => {
-				this.answers[`Q${index + 1}answer`] = item.answer;
-			})
-		},
+    getAnswer() {
+      this.questions.forEach((item, index) => {
+        this.answers[`Q${index + 1}answer`] = item.answer;
+      });
+    },
 
-		sendAnswer() {
-			this.getAnswer();
+    sendAnswer() {
+      this.getAnswer();
       console.log(this.answers);
-			// this.$router.push({path: '/'});
-		},
+      // this.$router.push({path: '/'});
+    },
 
-		*submitBtn() {
-			let text = ``;
-			if (!this.requireValidate()) {
-				text = `有必填项未填写，无法提交！`;
-				this.iterator = null;
-			} else {
-				text = `确认提交问卷吗？`
-			}
+    * submitBtn() {
+      let text = ``;
+      if (!this.requireValidate()) {
+        text = `有必填项未填写，无法提交！`;
+        this.iterator = null;
+      } else {
+        text = `确认提交问卷吗？`;
+      }
 
-			yield this.showPrompt(text);
-			yield this.sendAnswer();
-		},
+      yield this.showPrompt(text);
+      yield this.sendAnswer();
+    },
 
-		*backBtn() {
-			yield this.showPrompt(`放弃答题回到主页吗？`);
-			yield this.$router.push({path: '/'});
-		},
-	},
-}
+    * backBtn() {
+      yield this.showPrompt(`放弃答题回到主页吗？`);
+      yield this.$router.push({ path: '/' });
+    },
+  },
+};
 </script>
 
 <style scoped lang="scss">

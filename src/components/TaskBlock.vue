@@ -47,15 +47,16 @@ export default {
   },
   methods: {
     viewTaskClick() {
-      this.$router.push({ path: '/mainpage/task-breif-info?task_id='+this.taskInfo.task_id });
+      this.$router.push({ path: '/mainpage/task-breif-info?task_id=' + this.taskInfo.task_id });
     },
     getImageUrl() {
-      if (this.taskInfo && this.taskInfo.image)
+      if (this.taskInfo && this.taskInfo.image) {
         return this.taskInfo.image;
-      return "../assets/background.jpg"
+      }
+      return '../assets/background.jpg';
     },
     getTaskTypeName() {
-      switch(this.taskInfo.task_type) {
+      switch (this.taskInfo.task_type) {
         case 1: return '问卷调查';
         case 2: return '协会招新';
         case 3: return '快递代收';
@@ -64,7 +65,7 @@ export default {
     handleCollect() {
       if (this.collect_text === '收藏') {
         createCollect(this.taskInfo.task_id)
-        .then(response => {
+          .then(response => {
           if (response.status === 200) {
             this.taskInfo.is_collect = false;
             this.collect_text = '已收藏';
@@ -77,7 +78,7 @@ export default {
             throw response.data.error;
           }
         })
-        .catch(err => {
+          .catch(err => {
           this.$message.error('收藏失败：'+err);
         })
       } else {

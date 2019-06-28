@@ -25,7 +25,7 @@
 
 <script>
 import TaskBlock from '@/components/TaskBlock';
-import { getTaskInfo } from '@/api/tasks'
+import { getTaskInfo } from '@/api/tasks';
 
 export default {
   name: 'CategoryPage',
@@ -33,22 +33,22 @@ export default {
     TaskBlock
   },
   beforeMount() {
-    let Loading = this.$loading({
-      lock: true,
-      text: '正快马加鞭帮小主查询',
-      spinner: 'el-icon-loading',
-      background: 'rgba(0, 0, 0, 0.7)'
-    });
+    // let Loading = this.$loading({
+    //   lock: true,
+    //   text: '正快马加鞭帮小主查询',
+    //   spinner: 'el-icon-loading',
+    //   background: 'rgba(0, 0, 0, 0.7)'
+    // });
 
-    let queryJsons = [
+    const queryJsons = [
       {
-        task_type:1
+        task_type: 1
       },
       {
-        task_type:2
+        task_type: 2
       },
       {
-        task_type:3
+        task_type: 3
       }
     ];
 
@@ -58,12 +58,12 @@ export default {
         console.log(queryJsons[0] + 'code:200');
         console.log(response.data);
         this.taskListWithType1 = response.data.data;
+      } else {
+        throw response.data.error;
       }
-      else
-        throw response.data.error;;
     }).catch(err => {
       this.$message.error(err);
-    })
+    });
 
     getTaskInfo(queryJsons[1]).then(response => {
       const status = response.status;
@@ -71,12 +71,12 @@ export default {
         console.log(queryJsons[1] + 'code:200');
         console.log(response.data);
         this.taskListWithType2 = response.data.data;
+      } else {
+        throw response.data.error;
       }
-      else
-        throw response.data.error;;
     }).catch(err => {
       this.$message.error(err);
-    })
+    });
 
     getTaskInfo(queryJsons[2]).then(response => {
       const status = response.status;
@@ -84,13 +84,12 @@ export default {
         console.log(queryJsons[2] + 'code:200');
         console.log(response.data);
         this.taskListWithType3 = response.data.data;
-        Loading.close();
+      } else {
+        throw response.data.error;
       }
-      else
-        throw response.data.error;;
     }).catch(err => {
       this.$message.error(err);
-    })
+    });
   },
   data() {
     return {
