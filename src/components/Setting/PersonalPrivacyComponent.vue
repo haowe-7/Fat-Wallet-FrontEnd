@@ -85,11 +85,57 @@ export default {
   },
   methods: {
     modifyPhoneAndEmail: function() {
-
+      this.$confirm('确定修改用户个人信息?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+      }).then(() => {
+        this.loading1 = true;
+        this.bottonText1 = '上传中';
+        modifyUser(this.userInfoForm)
+          .then(response => {
+            const status = response.status;
+            if (status === 200) {
+              this.$message.success("修改信息上传成功");
+            } else {
+              throw response.data.error;
+            }
+          })
+          .catch(err => {
+            this.$message.error("上传修改信息失败：" + error);
+          })
+          .finally(() => {
+            this.loading1 = false;
+            this.bottonText1 = '确认修改';
+          });
+      });
     },
 
     modifyPassword: function() {
-
+      this.$confirm('确定修改用户密码?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+      }).then(() => {
+        this.loading2 = true;
+        this.bottonText2 = '上传中';
+        modifyPassword(this.password)
+          .then(response => {
+            const status = response.status;
+            if (status === 200) {
+              this.$message.success("修改信息上传成功");
+            } else {
+              throw response.data.error;
+            }
+          })
+          .catch(err => {
+            this.$message.error("上传修改信息失败：" + error);
+          })
+          .finally(() => {
+            this.loading2 = false;
+            this.bottonText2 = '确认修改';
+          });
+      });
     }
   },
 };
