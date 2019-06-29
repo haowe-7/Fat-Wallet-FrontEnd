@@ -17,8 +17,10 @@
             </el-input>
           </el-form-item>
           <el-form-item prop="major">
-            <el-input v-model="userInfoForm.major" placeholder="专业" autocomplete="off">
-              <template slot="prepend">专业</template>
+            <el-input v-model="userInfoForm.major" placeholder="学院" autocomplete="off">
+              <el-select v-model="userInfoForm.major" slot="prepend" placeholder="学院">
+                  <el-option v-for="major in majorList" :key="major" :label="major" :value="major"></el-option>
+              </el-select>
             </el-input>
           </el-form-item>
           <el-form-item prop="nickname">
@@ -42,7 +44,7 @@
         <el-input style="font-size:120%"
           type="textarea"
           :autosize="{ minRows: 3, maxRows: 5}"
-          placeholder="封面宣言"
+          placeholder="个人简介"
           v-model="userInfoForm.profile">
         </el-input>
       </div>
@@ -84,6 +86,7 @@ export default {
       controlStatus: '确认更改',
       imageUrl: '',
       loading: false,
+      majorList: ['数据科学与计算机学院', '岭南学院', '管理学院', '工学院', '材料学院', '中山医学院', '光华口腔医学院', '公共卫生学院', '国际关系学院', '国际翻译学院', '国际金融学院', '马克思主义学院', '其他学院'],
       userInfoForm: {
         username: '',
         password: '',
@@ -99,6 +102,16 @@ export default {
   },
   methods: {
     controlButtonClick: function() {
+      if(this.userInfoForm.username === '' || this.userInfoForm.student_id === '') {
+        this.$message.error("姓名和学号不能为空哦😊");
+        return;
+      }
+      var reg='^[0-9]{8}$';
+      var pattern = new RegExp(reg);
+      if(!pattern.test(this.userInfoForm.student_id)) {
+        this.$message.error("请输入正确的8位数字中大学号哦😊");
+        return;
+      }
       this.$confirm('确定修改用户个人信息?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
