@@ -24,7 +24,7 @@ export function closeTask(task_id) {
 // 修改任务
 export function modifyTask(taskInfo) {
   return request({
-    url: '/api/tasks/',
+    url: '/api/tasks',
     method: 'patch',
     data: taskInfo
   });
@@ -41,7 +41,7 @@ export function getTaskInfo(queryJson) {
 // 获取任务具体内容
 export function getTaskExtra(task_id) {
   return request({
-    url: '/api/tasks/extra?tasl_id=' + task_id,
+    url: '/api/tasks/extra?task_id=' + task_id,
     method: 'get',
   });
 }

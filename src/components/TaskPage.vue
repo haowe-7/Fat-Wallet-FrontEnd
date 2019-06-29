@@ -37,7 +37,7 @@ export default {
   }
 };
 </script>
-<style>
+<style scope>
 #main {
   padding-top: 2%;
   padding-left: 15%;

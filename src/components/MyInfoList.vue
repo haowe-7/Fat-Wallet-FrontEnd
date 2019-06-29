@@ -73,11 +73,12 @@ export default {
         sharer_id: this.user_id
       }];
     console.log(queryJsons);
+    console.log('user_id', this.user_id);
     getTaskInfo(queryJsons[0]).then(response => {
       const status = response.status;
       if (status === 200) {
         console.log(queryJsons[0] + 'code:200');
-        console.log(response.data);
+        console.log("我的发布：", response.data);
         this.taskListAsCreator = response.data.data;
       } else {
         throw response.data.error;

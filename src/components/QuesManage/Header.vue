@@ -11,7 +11,7 @@
 	}
 </script>
 
-<style>
+<style scope>
 	#header {
 		display: flex;
 		justify-content: flex-start;

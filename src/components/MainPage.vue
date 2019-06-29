@@ -21,7 +21,7 @@
           <p v-on:click="goToMainPage">主页</p>
           <p v-on:click="goToSetting">设置</p>
           <p>消息</p>
-          <p>退出</p>
+          <p v-on:click="logout">退出</p>
         </div>
         <div slot="reference" class="avatar">
           <img src="../assets/background.jpg" />
@@ -48,6 +48,21 @@ export default {
     },
     goToMainPage() {
       this.$router.push({ path: '/mainpage' });
+    },
+    logout() {
+      this.$confirm('是否退出登录?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$store.dispatch('LogOut').then(() => {
+          this.$router.push({ path: '/' });
+          this.$message.success('成功退出登录');
+        }).catch(err => {
+          this.$message.err('退出登录失败：' + err);
+        })
+      }).catch(() => {        
+      });
     }
   },
   mounted() {

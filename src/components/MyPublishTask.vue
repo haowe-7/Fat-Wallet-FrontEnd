@@ -25,6 +25,7 @@
           <el-form-item prop="due_time">
             <el-date-picker style="width: 100%"
               v-model="taskForm.due_time"
+              value-format="yyyy-MM-dd HH:mm:ss"
               type="datetime"
               placeholder="选择任务期限日期与时间">
             </el-date-picker>
@@ -95,7 +96,7 @@ export default {
     },
     submitTaskNextStepButtonClick() {
       this.$store.dispatch('UpDateTaskForm', this.taskForm);
-      if (this.taskForm.task_type === 1) {
+      if (this.taskForm.task_type === '1') {
         this.$router.push({ path: '/mainpage/myinfo/ques-edit' });
       } else {
         this.$router.push({ path: '/mainpage/myinfo/publish-deliver-task-detail' });

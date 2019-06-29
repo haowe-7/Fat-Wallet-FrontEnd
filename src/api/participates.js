@@ -4,7 +4,7 @@ import json2queryString from '@/utils/urls';
 // 获取参与信息
 export function getParticipatesInfo(queryJson) {
   return request({
-    url: '/api/participates?'+json2queryString(queryJson),
+    url: '/api/participates?' + json2queryString(queryJson),
     method: 'get'
   });
 }
@@ -12,7 +12,7 @@ export function getParticipatesInfo(queryJson) {
 // 申请参与
 export function applyForParticipates(task_id) {
   return request({
-    url: '/api/participates/',
+    url: '/api/participates',
     method: 'post',
     data: {
       task_id: task_id
@@ -23,7 +23,7 @@ export function applyForParticipates(task_id) {
 // 取消参与
 export function deleteParticipates(task_id, participator_id) {
   return request({
-    url: '/api/participates/',
+    url: '/api/participates',
     method: 'delete',
     data: {
       task_id: task_id,

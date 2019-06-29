@@ -24,7 +24,7 @@ export function logout() {
 // 注册
 export function register(userInfo) {
   return request({
-    url: '/api/users/',
+    url: '/api/users',
     method: 'post',
     data: userInfo
   });
@@ -49,7 +49,7 @@ export function getLoginInfo() {
 // 修改用户信息
 export function modifyUser(userInfo) {
   return request({
-    url: '/api/users/',
+    url: '/api/users',
     method: 'patch',
     data: userInfo
   });
@@ -58,7 +58,7 @@ export function modifyUser(userInfo) {
 // 修改密码
 export function modifyPassword(password) {
   return request({
-    url: '/api/users/',
+    url: '/api/users/password',
     method: 'put',
     data: {
       password: password

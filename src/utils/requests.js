@@ -45,20 +45,28 @@ service.interceptors.response.use(
       if (error.response.data.error) {
         return Promise.reject(error.response.data.error);
       }
-    } else if (error.response.status === 401) {
-      console.log('未认证');
-      console.log(error.request.responseURL);
+    } else if (error.response.status === 401 || error.response.status === 403) {
+      console.log('未认证', error.request.responseURL);
       if (router.currentRoute.path !== '/login') {
-        store.dispatch('FeLogOut').then(() => {
-          MessageBox.confirm('认证已失效，可以取消继续留在该页面，或者重新登录', '未认证', {
-            confirmButtonText: '重新登录',
-            cancelButtonText: '取消',
-            type: 'warning'
-          }).then(() => {
-            router.push({ path: '/login' });
-          }).catch(() => {
-          });
-        });
+        // MessageBox.confirm('认证已失效，可以取消继续留在该页面，或者重新登录', '未认证', {
+        //   confirmButtonText: '重新登录',
+        //   cancelButtonText: '取消',
+        //   type: 'warning'
+        // }).then(() => {
+        //   router.push({ path: '/login' });
+        // }).catch(() => {
+        // });
+        router.push({ path: '/login' });
+        // store.dispatch('FeLogOut').then(() => {
+        //   MessageBox.confirm('认证已失效，可以取消继续留在该页面，或者重新登录', '未认证', {
+        //     confirmButtonText: '重新登录',
+        //     cancelButtonText: '取消',
+        //     type: 'warning'
+        //   }).then(() => {
+        //     router.push({ path: '/login' });
+        //   }).catch(() => {
+        //   });
+        // });
       }
     } else if (error.response.status > 400) {
       console.log(`未指明的错误: ${error.response.status}`);

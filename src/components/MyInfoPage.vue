@@ -60,7 +60,7 @@ export default {
 };
 </script>
 
-<style>
+<style scope>
 
 #my-info-page-main {
   width: 100%;

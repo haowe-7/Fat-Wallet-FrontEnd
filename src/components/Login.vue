@@ -4,14 +4,14 @@
     <div id="input-box">
       <el-form :model="loginForm" ref="loginForm" status-icon :rules="loginRules">
         <el-form-item prop="username">
-          <el-input v-model="loginForm.username" placeholder="用户名" autocomplete="off"></el-input>
+          <el-input class='login-input' v-model="loginForm.username" placeholder="用户名" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input type="password" v-model="loginForm.password" placeholder="请输入密码" autocomplete="off"></el-input>
+          <el-input class='login-input' type="password" v-model="loginForm.password" placeholder="请输入密码" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <a id="forgetPass" v-on:click="passwordFindMethod">忘记密码？</a>
-      <el-button height="25px" :loading="loading" v-on:click="handleLogin" round>登录</el-button>
+      <el-button id='login-botton' height="25px" :loading="loading" v-on:click="handleLogin" round>登录</el-button>
       <span>还没有账户?<a id="register" v-on:click="gotoRegister">立即注册</a></span>
     </div>
     <PasswordBackDialog :visible.sync = "dialogFormVisible"></PasswordBackDialog>
@@ -20,6 +20,7 @@
 
 <script>
 import PasswordBackDialog from '@/components/PasswordBackDialog';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'Login',
@@ -87,13 +88,18 @@ export default {
       this.$router.push({ path: '/register' });
     }
   },
+  computed: {
+    ...mapGetters({
+      user_id: 'user_id'
+    })
+  },
   mounted() {
     this.dialogFormVisible = false;
   }
 };
 </script>
 
-<style>
+<style scope>
 
 #login-main {
   background: url("../assets/background.jpg"), no-repeat;
@@ -118,11 +124,11 @@ export default {
   margin-right: 35%;
 }
 
-.el-input {
+.login-input {
   font-size: 20px;
 }
 
-.el-input input {
+.login-input input {
   height: 45px;
   border-color: gray;
   background-color:transparent;
@@ -130,7 +136,7 @@ export default {
   border-radius: 25px;
 }
 
-.el-button {
+#login-botton {
   width: 100%;
   margin-top: 4%;
   font-size: 25px;

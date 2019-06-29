@@ -107,7 +107,7 @@ export default {
 };
 </script>
 
-<style>
+<style scope>
 .category-sub-title {
   font-size: 110%;
   color: gray;

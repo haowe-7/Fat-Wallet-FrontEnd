@@ -105,7 +105,7 @@ export default {
 };
 </script>
 
-<style>
+<style scope>
 .box-card {
   margin-top: 2%;
   padding: 2%;

@@ -5,19 +5,19 @@
     <div id="input-box">
       <el-form :model="registerForm" ref="registerForm" status-icon :rules="registerRules">
         <el-form-item prop="username">
-          <el-input v-model="registerForm.username" placeholder="用户名" autocomplete="off"></el-input>
+          <el-input class="register-input" v-model="registerForm.username" placeholder="用户名" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item prop="mail">
-          <el-input v-model="registerForm.mail" placeholder="邮箱" autocomplete="off"></el-input>
+          <el-input class="register-input" v-model="registerForm.mail" placeholder="邮箱" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input v-model="registerForm.password" placeholder="密码" type="password" autocomplete="off"></el-input>
+          <el-input class="register-input" v-model="registerForm.password" placeholder="密码" type="password" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item prop="checkPass">
-          <el-input v-model="registerForm.checkPass" placeholder="确认密码" type="password" autocomplete="off"></el-input>
+          <el-input class="register-input" v-model="registerForm.checkPass" placeholder="确认密码" type="password" autocomplete="off"></el-input>
         </el-form-item>
-        <el-checkbox v-model="checked" size="medium">同意盈小钱用户协议</el-checkbox>
-        <el-button height="25px" :loading="loading" v-on:click="handleRegister" round>注册</el-button>
+        <el-checkbox class="register-check" v-model="checked" size="medium">同意盈小钱用户协议</el-checkbox>
+        <el-button id='register-botton' height="25px" :loading="loading" v-on:click="handleRegister" round>注册</el-button>
       </el-form>
     </div>
   </div>
@@ -127,7 +127,7 @@ export default {
 };
 </script>
 
-<style>
+<style scope>
 
 #main {
   background: url("../assets/background.jpg"), no-repeat;
@@ -152,7 +152,7 @@ export default {
   margin-right: 35%;
 }
 
-.el-input input {
+.register-input input {
   font-size: 20px;
   height: 45px;
   border-color: gray;
@@ -162,11 +162,11 @@ export default {
   padding: 5%;
 }
 
-.el-checkbox {
+.register-check {
   margin: 2%;
 }
 
-.el-button {
+#register-botton {
   width: 100%;
   font-size: 25px;
   font-weight: bold;

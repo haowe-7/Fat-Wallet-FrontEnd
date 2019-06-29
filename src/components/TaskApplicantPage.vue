@@ -1,13 +1,14 @@
 <template>
   <div>
-    <div v-for="o in 5" :key="o">
+    <div v-for="user in applicant" :key="user.id">
       <el-card class="user-item" shadow="hover">
         <div id="user-icon">
           <img src="../assets/background.jpg" />
         </div>
         <div style="display:inline-block; width:75%; vertical-align:top">
-          <div id="username">Messiah</div>
-          <div id="discuss-text">一个抱紧大佬大腿的程序猿~</div>
+          <div id="username">{{ user.username }}</div>
+          <div class="contact">联系电话：{{ user.phone }}</div>
+          <div class="contact">邮箱：{{ user.email }}</div>
         </div>
         <el-button id="edit-button" :class="controlButtonVisible ? '' : 'invisible'" round>{{controlButtonText}}</el-button>
       </el-card>
@@ -16,10 +17,34 @@
 </template>
 
 <script>
-var src = require('../assets/background.jpg');
+import { getParticipatesInfo } from '@/api/participates'
+
 export default {
   name: 'TaskDiscussPage',
   components: {
+  },
+  beforeMount() {
+    this.task_id = this.$route.query.task_id;
+    getParticipatesInfo({
+      task_id: this.task_id
+    }).then(response => {
+      const status = response.status;
+      const data = response.data;
+      console.log(data);
+      if (status === 200) {
+        const users = data.data;
+        this.applicant = [];
+        for(const user of users) {
+          if (user.status === '申请中') {
+            this.applicant.push(user);
+          }
+        }
+      } else {
+        throw data.error;
+      }
+    }).catch(err => {
+      this.$message.error("获取信息失败: " + error);
+    });
   },
   props: {
     controlButtonVisible: {
@@ -33,7 +58,8 @@ export default {
   },
   data() {
     return {
-      src
+      task_id: null,
+      applicant: []
     };
   },
   methods: {

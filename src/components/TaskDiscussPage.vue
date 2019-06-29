@@ -36,7 +36,7 @@ export default {
     }).then(response => {
       const status = response.status;
       if (status === 200) {
-        console.log(response.data);
+        console.log("评论列表", response.data);
         this.comments = response.data.data;
         Loading.close();
       } else {
