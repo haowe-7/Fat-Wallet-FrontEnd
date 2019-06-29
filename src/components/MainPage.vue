@@ -12,6 +12,10 @@
           v-model="search_text">
         </el-input>
       </div>
+      <div id="money-div" v-on:click="moneyIconClick">
+        <img id="money-icon" src="../assets/money-icon.png"/>
+        <p id="money-count">{{ money }}</p>  
+      </div>
       <el-popover
         enterable='false'
         placement="bottom"
@@ -39,7 +43,8 @@ export default {
   components: {},
   data() {
     return {
-      search_text: ''
+      search_text: '',
+      money: 1000
     };
   },
   methods: {
@@ -48,6 +53,9 @@ export default {
     },
     goToMainPage() {
       this.$router.push({ path: '/mainpage' });
+    },
+    moneyIconClick() {
+      this.money += 200;
     }
   },
   mounted() {
@@ -127,6 +135,28 @@ p {
   border: 1px solid;
   padding: 5%;
   margin: 0px;
+}
+
+/* money style */
+#money-div {
+  display: inline-block;
+  margin-left: 80px;
+  height: 100%;
+  width: 200px;
+  cursor: pointer;
+}
+
+#money-icon {
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+  vertical-align: bottom;
+}
+
+#money-count {
+  display: inline-block;
+  height: 20px;
+  border: 0px;
 }
 
 </style>
