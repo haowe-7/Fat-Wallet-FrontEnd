@@ -18,6 +18,7 @@ import Fill from '@/components/QuesManage/Fill';
 import SettingPage from '@/components/SettingPage';
 import PersonalInfoComponent from '@/components/Setting/PersonalInfoComponent';
 import PersonalPrivacyComponent from '@/components/Setting/PersonalPrivacyComponent';
+import NoticePage from '@/components/Notice/NoticePage';
 
 Vue.use(Router);
 
@@ -137,6 +138,11 @@ export default new Router({
               component: PersonalPrivacyComponent
             }
           ]
+        },
+        {
+          path: 'notice',
+          name: 'NoticePage',
+          component: NoticePage,
         }
       ]
     }

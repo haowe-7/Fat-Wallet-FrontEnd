@@ -24,7 +24,7 @@
         <div class="simpleDetail">
           <p v-on:click="goToMainPage">主页</p>
           <p v-on:click="goToSetting">设置</p>
-          <p>消息</p>
+          <p v-on:click="goToNoticePage">消息</p>
           <p>退出</p>
         </div>
         <div slot="reference" class="avatar">
@@ -56,6 +56,9 @@ export default {
     },
     moneyIconClick() {
       this.money += 200;
+    },
+    goToNoticePage() {
+      this.$router.push({ path: '/mainpage/notice' });
     }
   },
   mounted() {
