@@ -55,23 +55,32 @@
         </el-menu>
       </div>
       <div class="content">
-        <keep-alive>
-
-        </keep-alive>
+        <div slot="header" class="content-header">
+          <span style="font-size:140%; font-weight:bold;">个人资料</span>
+          <el-button dclass="control-button" :loading="loading" round v-on:click="controlButtonClick">{{controlStatus}}</el-button>
+        </div>
+        <div v-for="o in 5" :key="o">
+          <NoticeBlock :controlButtonVisible="true" :controlButtonText="已读" :userName="jmfmjm" :noticeText="陈彬彬是世界上最帅的人"></NoticeBlock>
+        </div>
       </div>
     </el-card>
   </div>
 </template>
 
 <script>
+
+import NoticeBlock from '@/components/Notice/NoticeBlock';
 export default {
   name: 'NoticePage',
   components: {
+    NoticeBlock
   },
   data() {
     return {
       noticeTypeList: ['全部类别', '站内通知', '发起的任务', '参与的任务', '进行的任务', '关注我的', '赞同与感谢', '评论与回复'],
-      noticeType: '全部类别'
+      noticeType: '全部类别',
+      controlStatus: '全部已读',
+      loading: false,
     };
   },
   methods: {
@@ -104,11 +113,25 @@ export default {
 .content {
   display: inline-block;
   margin-left: 2%;
-  width: 75%;
+  width: 70%;
 }
 
 #title-el-menu-item {
   padding-left: 0px ! important;
+}
+
+.content-header {
+  width: 100%;
+  margin-top: 1%;
+  padding-bottom: 2%;
+  border-bottom: 2px solid lightgray;
+}
+
+.control-button {
+  float: right;
+  font-size: 120%;
+  padding: 5px 0; 
+  width: 100px;
 }
 
 </style>
