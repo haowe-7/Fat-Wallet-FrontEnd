@@ -54,8 +54,6 @@ export default {
     goToMainPage() {
       this.$router.push({ path: '/mainpage' });
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
     logout() {
       this.$confirm('是否退出登录?', '提示', {
         confirmButtonText: '确定',
@@ -70,18 +68,12 @@ export default {
         })
       }).catch(() => {        
       });
-=======
-=======
->>>>>>> 03e46eeeba2b2979c1224a3fb507c63d958d6f5e
+    },
     moneyIconClick() {
       this.money += 200;
     },
     goToNoticePage() {
       this.$router.push({ path: '/mainpage/notice' });
-<<<<<<< HEAD
->>>>>>> 03e46eeeba2b2979c1224a3fb507c63d958d6f5e
-=======
->>>>>>> 03e46eeeba2b2979c1224a3fb507c63d958d6f5e
     }
   },
   mounted() {
