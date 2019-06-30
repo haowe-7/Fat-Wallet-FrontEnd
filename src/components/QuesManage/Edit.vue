@@ -317,18 +317,18 @@ export default {
 				this.saveData();
 			})();
 			yield (() => {
-        console.log(this.quData);
-        this.$store.dispatch('UpDateExtra', this.quData);
-        this.$store.dispatch('SubmitTaskForm').then(() => {
-          this.$message({
-            message: '发布成功！！',
-            type: 'success'
-          });
-        }).catch(err => {
-          this.$message.error('发布失败：'+err);
-        } )
-        this.$router.push({path: '/mainpage/myinfo/myinfolist'});
-      })();
+				console.log(this.quData);
+				this.$store.dispatch('UpDateExtra', this.quData);
+				this.$store.dispatch('SubmitTaskForm').then(() => {
+				this.$message({
+					message: '发布成功！！',
+					type: 'success'
+				});
+				}).catch(err => {
+				this.$message.error('发布失败：'+err);
+				} )
+				this.$router.push({path: '/mainpage/myinfo/myinfolist'});
+			})();
 		}
 	},
 
