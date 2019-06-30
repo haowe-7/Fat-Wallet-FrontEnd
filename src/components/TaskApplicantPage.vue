@@ -49,27 +49,6 @@ export default {
   components: {
   },
   beforeMount() {
-    this.task_id = this.$route.query.task_id;
-    getParticipatesInfo({
-      task_id: this.task_id
-    }).then(response => {
-      const status = response.status;
-      const data = response.data;
-      console.log(data);
-      if (status === 200) {
-        const users = data.data;
-        this.applicant = [];
-        for(const user of users) {
-          if (user.status === '申请中') {
-            this.applicant.push(user);
-          }
-        }
-      } else {
-        throw data.error;
-      }
-    }).catch(err => {
-      this.$message.error("获取信息失败: " + error);
-    });
   },
   data() {
     return {
@@ -90,7 +69,11 @@ export default {
         if (status === 200) {
           for (let i = 0; i < this.current_task_info.participators.length; i++) {
             if (this.current_task_info.participators[i].user_id === this.sp_user_id) {
-              this.current_task_info.participators[i].status = '进行中';
+              if (view === 'yes') {
+                this.current_task_info.participators[i].status = '进行中';
+              } else {
+                this.current_task_info.participators.splice(i, 1);
+              }
               break;
             }
           }

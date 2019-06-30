@@ -3,7 +3,12 @@
     <el-card>
       <div slot='header'>
         <span style='font-size:120%; font-weight:bold;'>快递任务详情</span>
-        <el-button style='float: right; font-size:120%; padding: 5px 0; width: 100px;' :loading='loading' round v-on:click='finishButtonClick'>我已完成</el-button>
+        <el-button 
+          style='float: right; font-size:120%; padding: 5px 0; width: 150px;'
+          :loading='loading'
+          round
+          type='success'
+          v-on:click='finishButtonClick'> {{ buttonText }} </el-button>
       </div>
       <el-form>
         <el-form-item v-for='o in 3' :key='o' prop='title'>
@@ -28,10 +33,18 @@
 
 <script>
 import { getTaskExtra } from '@/api/tasks';
+import { confirmFinish } from '@/api/participates';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'DeliverTaskDetailPage',
   components: {
+  },
+  computed: {
+    ...mapGetters({
+      user_id: 'user_id',
+      current_task_info: 'current_task_info'
+    })
   },
   beforeMount() {
     const task_id = this.$route.query.task_id;
@@ -64,13 +77,43 @@ export default {
   data() {
     return {
       loading: false,
+      buttonText: '我已完成',
       itemTitle: ['单号', '快递柜', '取件码', '私人信息'],
       itemText: ['未知', '未知', '未知', '未知'],
     };
   },
   methods: {
     finishButtonClick() {
-      console.log('finish task');
+      if (this.buttonText === '我已完成') {
+        this.$confirm('是否确定完成任务？结果将交与发布者审批', '提示', {
+          confirmButtonText: '确定完成',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.loading = true;
+          confirmFinish(this.current_task_info.task_id).then(response => {
+            const status = response.status;
+            const data = response.data;
+            if (status === 200) {
+              this.$message.success('确定完成成功，等待申请者审批');
+              for (let i = 0; i < this.current_task_info.participators.length; i++) {
+                if (this.current_task_info.participators[i].user_id === this.user_id) {
+                  this.current_task_info.participators[i].status = '审批中';
+                  break;
+                }
+              }
+              this.$store.dispatch('UpDateCurrentTaskInfo', this.current_task_info);
+            } else {
+              throw data.error;
+            }
+          }).catch(err => {
+            this.$message.error("确定完成失败: " + err);
+          }).finally(() => {
+            this.loading = false;
+          })
+        }).catch(() => {        
+        });
+      }
     }
   },
 };

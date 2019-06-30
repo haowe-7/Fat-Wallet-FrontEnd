@@ -45,3 +45,17 @@ export function getTaskExtra(task_id) {
     method: 'get',
   });
 }
+
+// 审批任务完成结果
+export function reviewTaskResult(task_id, participator_id, view) {
+  return request({
+    url: '/api/tasks/review',
+    method: 'post',
+    data: {
+      task_id: task_id,
+      participator_id: participator_id,
+      view: view
+    }
+  });
+}
+

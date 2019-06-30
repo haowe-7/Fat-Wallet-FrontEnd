@@ -30,7 +30,7 @@
         </router-link>
         <router-link :to="'/mainpage/task-breif-info/participator?task_id=' + (taskInfo ? taskInfo.task_id : 0)">
           <el-badge :value="current_task_info ? current_task_info.participators.filter(
-              p => {return p.status === '进行中';}
+              p => {return p.status === '进行中' || p.status === '审批中' || p.status === '已完成';}
             ).length : 0" class="asso-info-badge"> 
             <el-button class="asso-info-nav-button">参与者</el-button>
           </el-badge>
@@ -69,6 +69,20 @@ export default {
         this.bottonTextDisplay = false;
       } else {
         this.bottonTextDisplay = true;
+      }
+      for (let p of this.taskInfo.participators) {
+        if (p.user_id === this.user_id) {
+          console.log(p.status);
+          if (p.status === '申请中') {
+            this.buttonText = '等待审批';
+          } else if (p.status === '进行中') {
+            this.buttonText = '查看详情';
+          } else if (p.status === '已完成') {
+            this.buttonText = '已完成';
+          } else if (p.status === '审批中') {
+            this.buttonText = '等待审批';
+          }
+        }
       }
       this.itemText = [
         this.getTaskTypeName(),
@@ -127,7 +141,7 @@ export default {
               status: '申请中',
             }].concat(this.current_task_info.participators);
             this.$store.dispatch('UpDateCurrentTaskInfo', this.current_task_info);
-            this.buttonText = '已申请';
+            this.buttonText = '等待审批';
           } else {
             throw data.error;
           }
@@ -145,33 +159,6 @@ export default {
           this.$router.push({ path: '/mainpage/deliver-task-detail?task_id=' + task_id });
       }
     },
-    // UpdateApplicantNums () {
-    //   this.applicant_nums = 0;
-    //   if (!this.taskInfo)
-    //     return;
-    //   for (let p of this.taskInfo.participators) {
-    //     if (p.status === '申请中') {
-    //       this.applicant_nums  += 1;
-    //     }
-    //   }
-    // },
-    // UpdateParticipatorNums: function () {
-    //   this.participator_nums = 0;
-    //   if (!this.taskInfo)
-    //     return;
-    //   for (let p of this.taskInfo.participators) {
-    //     if (p.status === '进行中') {
-    //       this.participator_nums += 1;
-    //     }
-    //     if (p.user_id === this.user_id) {
-    //       if (p.status === '申请中 ') {
-    //         this.buttonText = '申请中';
-    //       } else if (p.status === '进行中') {
-    //         this.buttonText === '查看详情';
-    //       }
-    //     }
-    //   }
-    // },
     getTaskTypeName() {
       if (this.taskInfo) {
         switch(this.taskInfo.task_type) {

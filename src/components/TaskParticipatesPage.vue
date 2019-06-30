@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="user in current_task_info.participators" v-if="user.status === '进行中'" :key="user.id">
+    <div v-for="user in current_task_info.participators" v-if="user.status === '进行中' || user.status === '审批中' || user.status === '已完成'" :key="user.id">
       <el-card class="user-item" shadow="hover">
         <div id="user-icon">
           <img src="../assets/background.jpg" />
@@ -11,24 +11,48 @@
           <div class="contact">邮箱：{{ user.email }}</div>
         </div>
         <el-button class="edit-button"
-          v-if="user.user_id === user_id"
+          v-if="user.user_id === user_id && user.status !== '已完成'"
           type="warning"
           :loading="cancelLoading"
           round plain
           v-on:click="cancelParticipate(user.user_id)">
           {{ cancelText }}</el-button>
         <el-button class="edit-button"
-          v-if="user.user_id !== user_id"
+          v-if="current_task_info.creator_id === user_id && user.status === '审批中'"
+          type="warning"
+          round plain
+          v-on:click="displayDialog(user.user_id)">
+          {{ approvalText }}</el-button>
+        <el-button class="edit-button"
+          v-if="user.user_id !== user_id && current_task_info.creator_id !== user_id && user.status !== '已完成'"
           type="primary"
           round plain>
-          进行中</el-button>
+          {{ user.status }}</el-button>
+        <el-button class="edit-button"
+          v-if="user.status === '已完成'"
+          type="info"
+          round plain>
+          已完成</el-button>
       </el-card>
     </div>
+
+    <el-dialog
+      title="进行审批"
+      :visible.sync="dialogVisible"
+      width="30%">
+      <p>是否同意该用户的任务完成？</p>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="Approval('yes')">同意完成</el-button>
+        <el-button type="warning" @click="Approval('no')">反对完成</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { getParticipatesInfo, deleteParticipates } from '@/api/participates';
+import { reviewTaskResult } from '@/api/tasks';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -41,11 +65,47 @@ export default {
     return {
       task_id: null,
       participants: [],
+      dialogVisible: false,
       cancelLoading: false,
-      cancelText: '取消参与'
+      cancelText: '取消参与',
+      approvalText: '进行审批',
+      sp_user_id: null
     };
   },
   methods: {
+    displayDialog: function (user_id) {
+      this.sp_user_id = user_id;
+      this.dialogVisible = true;
+    },
+    Approval(view) {
+      reviewTaskResult(this.current_task_info.task_id, this.sp_user_id, view)
+      .then(response => {
+        const status = response.status;
+        const data = response.data;
+        if (status === 200) {
+          for (let i = 0; i < this.current_task_info.participators.length; i++) {
+            if (this.current_task_info.participators[i].user_id === this.sp_user_id) {
+              if (view === 'yes') {
+                this.current_task_info.participators[i].status = '已完成';
+              } else {
+                this.current_task_info.participators[i].status = '已驳回';
+              }
+              break;
+            }
+          }
+          this.$store.dispatch('UpDateCurrentTaskInfo', this.current_task_info);
+          this.$message.success("审批成功！");
+        } else {
+          throw data.error;
+        }
+      })
+      .catch(err => {
+        this.$message.error("审批失败：" + err);
+      })
+      .finally(() => {
+        this.dialogVisible = false;
+      })
+    },
     cancelParticipate: function (user_id) {
       this.$confirm('确定取消参与该任务', '提示', {
         confirmButtonText: '确定',
