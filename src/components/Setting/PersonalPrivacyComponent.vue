@@ -42,10 +42,16 @@
 
 <script>
 import { getInfo, modifyPassword, modifyUser } from '@/api/users';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'PersonalPrivacyComponent',
   components: {
+  },
+  computed: {
+    ...mapGetters({
+      user_id: 'user_id'
+    })
   },
   beforeMount() {
     const Loading = this.$loading({
@@ -55,7 +61,8 @@ export default {
       background: 'rgba(0, 0, 0, 0.7)'
     });
     const queryJson = {
-      user_id: this.user_id
+      offset: this.user_id,
+      limit: 1
     };
     getInfo(queryJson).then(response => {
       const status = response.status;

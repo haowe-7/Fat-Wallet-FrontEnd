@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import createPersistedState from "vuex-persistedstate";
 import users from './modules/users';
 import tasks from './modules/tasks';
 import getters from './getters';
@@ -11,6 +12,7 @@ const store = new Vuex.Store({
     users,
     tasks
   },
-  getters
+  getters,
+  plugins: [createPersistedState()]
 });
 export default store;

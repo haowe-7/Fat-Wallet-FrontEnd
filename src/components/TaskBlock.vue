@@ -3,7 +3,7 @@
     <el-card class="box-card">
       <div id="task-title">{{ taskInfo.title }}</div>
       <div id="content">
-        <img :src="getImageUrl()"/>
+        <img src="../assets/background.jpg"/>
         <div id="info" v-on:click="viewTaskClick">
           <div class='item'> 发布人：{{ taskInfo.creator_name }} </div>
           <div class='item'> 任务类型：{{ getTaskTypeName() }} </div>

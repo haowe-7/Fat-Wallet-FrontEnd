@@ -67,7 +67,8 @@ export default {
       background: 'rgba(0, 0, 0, 0.7)'
     });
     const queryJson = {
-      user_id: this.user_id
+      offset: this.user_id,
+      limit: 1
     };
     getInfo(queryJson).then(response => {
       const status = response.status;

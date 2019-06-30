@@ -3,10 +3,11 @@
     <el-card class="box-card">
       <div slot="header">
         <span style="font-size:120%; font-weight:bold;">{{ taskInfo ? taskInfo.title : '' }}</span>
-        <el-button style="float: right; font-size:120%; padding: 5px 0; width: 100px;"
+        <el-button style="float: right; font-size:100%; padding: 8px; width: 150px;"
           v-if="bottonTextDisplay"
+          type="primary"
+          round plain
           :loading="loading"
-          round
           v-on:click="controlButtonClick">
           {{buttonText}}</el-button>
       </div>
@@ -21,12 +22,16 @@
           </el-badge>
         </router-link>
         <router-link :to="'/mainpage/task-breif-info/applicant?task_id=' + (taskInfo ? taskInfo.task_id : 0)" >
-          <el-badge :value="applicant_nums" class="asso-info-badge"> 
+          <el-badge :value="current_task_info ? current_task_info.participators.filter(
+              p => {return p.status === '申请中';}
+            ).length : 0" class="asso-info-badge"> 
             <el-button class="asso-info-nav-button">申请者</el-button>
           </el-badge>
         </router-link>
         <router-link :to="'/mainpage/task-breif-info/participator?task_id=' + (taskInfo ? taskInfo.task_id : 0)">
-          <el-badge :value="participator_nums" class="asso-info-badge"> 
+          <el-badge :value="current_task_info ? current_task_info.participators.filter(
+              p => {return p.status === '进行中';}
+            ).length : 0" class="asso-info-badge"> 
             <el-button class="asso-info-nav-button">参与者</el-button>
           </el-badge>
         </router-link>
@@ -53,36 +58,29 @@ export default {
       background: 'rgba(0, 0, 0, 0.7)'
     });
 
-    getTaskInfo({
+    const queryJson = {
       'offset': task_id,
       'limit': 1
-    }).then(response => {
-      const status = response.status;
-      const data = response.data;
-      console.log('任务信息：', data.data);
-      if (status === 200) {
-        this.taskInfo = data.data[0];
-        console.log(this.user_id, this.taskInfo.creator_id);
-        if (this.taskInfo.creator_id === this.user_id) {
-          this.bottonTextDisplay = false;
-        } else {
-          this.bottonTextDisplay = true;
-        }
-        this.UpdateApplicantNums();
-        this.UpdateParticipatorNums();
-        this.itemText = [
-          this.getTaskTypeName(),
-          this.taskInfo.reward + '元/人',
-          this.taskInfo.max_participate + '人',
-          this.taskInfo.due_time,
-          this.taskInfo.description
-        ];
-        Loading.close();
+    };
+
+    this.$store.dispatch('GetTaskInfo', queryJson).then(() => {
+      this.taskInfo = this.current_task_info;
+      if (this.taskInfo.creator_id === this.user_id) {
+        this.bottonTextDisplay = false;
       } else {
-        throw data.error;
+        this.bottonTextDisplay = true;
       }
+      this.itemText = [
+        this.getTaskTypeName(),
+        this.taskInfo.reward + '元/人',
+        this.taskInfo.max_participate + '人',
+        this.taskInfo.due_time,
+        this.taskInfo.description
+      ];
     }).catch(err => {
       this.$message.error('获取任务信息错误：' + err);
+    }).finally(() => {
+      Loading.close();
     });
   },
   data() {
@@ -94,13 +92,18 @@ export default {
       buttonText: '申请参加',
       bottonTextDisplay: false,
       itemTitle: ['类型', '报酬', '人数', '期限', '简介'],
-      itemText: ['问卷调查', '1元/人', '20人', '2019-07-01 23:59:59', '针对所有中大学生，调查学生对于计算机专业的认识和看法。']
+      itemText: ['未知类型', '0元/人', '0人', '2019-07-01 00:00:00', '测试简介。']
     };
   },
   computed: {
     ...mapGetters({
-      user_id: 'user_id'
-    })
+      user_id: 'user_id',
+      email: 'email',
+      phone: 'phone',
+      username: 'username',
+      current_task_info: 'current_task_info'
+    }),
+    
   },
   methods: {
     controlButtonClick() {
@@ -116,6 +119,14 @@ export default {
           const data = response.data;
           if (status === 200) {
             this.$message.success('成功发起申请');
+            this.current_task_info.participators = [{
+              user_id: this.user_id,
+              email: this.email,
+              phone: this.phone,
+              username: this.username,
+              status: '申请中',
+            }].concat(this.current_task_info.participators);
+            this.$store.dispatch('UpDateCurrentTaskInfo', this.current_task_info);
             this.buttonText = '已申请';
           } else {
             throw data.error;
@@ -134,33 +145,33 @@ export default {
           this.$router.push({ path: '/mainpage/deliver-task-detail?task_id=' + task_id });
       }
     },
-    UpdateApplicantNums () {
-      this.applicant_nums = 0;
-      if (!this.taskInfo)
-        return;
-      for (let p of this.taskInfo.participators) {
-        if (p.status === '申请中') {
-          this.applicant_nums  += 1;
-        }
-      }
-    },
-    UpdateParticipatorNums: function () {
-      this.participator_nums = 0;
-      if (!this.taskInfo)
-        return;
-      for (let p of this.taskInfo.participators) {
-        if (p.status === '进行中') {
-          this.participator_nums += 1;
-        }
-        if (p.user_id === this.user_id) {
-          if (p.status === '申请中 ') {
-            this.buttonText = '申请中';
-          } else if (p.status === '进行中') {
-            this.buttonText === '查看详情';
-          }
-        }
-      }
-    },
+    // UpdateApplicantNums () {
+    //   this.applicant_nums = 0;
+    //   if (!this.taskInfo)
+    //     return;
+    //   for (let p of this.taskInfo.participators) {
+    //     if (p.status === '申请中') {
+    //       this.applicant_nums  += 1;
+    //     }
+    //   }
+    // },
+    // UpdateParticipatorNums: function () {
+    //   this.participator_nums = 0;
+    //   if (!this.taskInfo)
+    //     return;
+    //   for (let p of this.taskInfo.participators) {
+    //     if (p.status === '进行中') {
+    //       this.participator_nums += 1;
+    //     }
+    //     if (p.user_id === this.user_id) {
+    //       if (p.status === '申请中 ') {
+    //         this.buttonText = '申请中';
+    //       } else if (p.status === '进行中') {
+    //         this.buttonText === '查看详情';
+    //       }
+    //     }
+    //   }
+    // },
     getTaskTypeName() {
       if (this.taskInfo) {
         switch(this.taskInfo.task_type) {

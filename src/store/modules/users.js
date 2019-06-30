@@ -6,7 +6,8 @@ const users = {
       user_id: null,
       username: null,
       avatar: null,
-      email: null
+      email: null,
+      phone: null
     },
     auth: false
   },
@@ -23,6 +24,9 @@ const users = {
     },
     SET_EMAIL: (state, email) => {
       state.info.email = email;
+    },
+    SET_PHONE: (state, phone) => {
+      state.info.phone = phone;
     },
     SET_AUTH: (state, auth) => {
       state.auth = auth;
@@ -43,6 +47,7 @@ const users = {
             commit('SET_USERNAME', data.username);
             commit('SET_AVATAR', data.avatar);
             commit('SET_EMAIL', data.email);
+            commit('SET_EMAIL', data.phone);
             commit('SET_AUTH', true);
             resolve();
           } else {
@@ -102,6 +107,7 @@ const users = {
         commit('SET_AVATAR', null);
         commit('SET_EMAIL', null);
         commit('SET_AUTH', false);
+        window.localStorage.clear();
         resolve();
       });
     },
