@@ -24,7 +24,8 @@
           v-on:click="displayDialog(user.user_id)">
           {{ approvalText }}</el-button>
         <el-button class="edit-button"
-          v-if="user.user_id !== user_id && current_task_info.creator_id !== user_id && user.status !== '已完成'"
+          v-if="!(current_task_info.creator_id === user_id && user.status === '审批中') 
+            && user.user_id !== user_id && user.status !== '已完成'"
           type="primary"
           round plain>
           {{ user.status }}</el-button>
@@ -63,7 +64,6 @@ export default {
   },
   data() {
     return {
-      task_id: null,
       participants: [],
       dialogVisible: false,
       cancelLoading: false,
@@ -74,8 +74,12 @@ export default {
   },
   methods: {
     displayDialog: function (user_id) {
-      this.sp_user_id = user_id;
-      this.dialogVisible = true;
+      if (this.current_task_info.task_type === 3) {
+        this.sp_user_id = user_id;
+        this.dialogVisible = true;
+      } else {
+        this.$router.push({ path: '/mainpage/ques-answer-detail?task_id=' + this.current_task_info.task_id + '&user_id=' + user_id });
+      }
     },
     Approval(view) {
       reviewTaskResult(this.current_task_info.task_id, this.sp_user_id, view)

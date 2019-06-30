@@ -15,6 +15,7 @@ import TaskParticipatesPage from '@/components/TaskParticipatesPage';
 import DeliverTaskDetailPage from '@/components/DeliverTaskDetailPage';
 import Edit from '@/components/QuesManage/Edit';
 import Fill from '@/components/QuesManage/Fill';
+import Answers from '@/components/QuesManage/Answers';
 import SettingPage from '@/components/SettingPage';
 import PersonalInfoComponent from '@/components/Setting/PersonalInfoComponent';
 import PersonalPrivacyComponent from '@/components/Setting/PersonalPrivacyComponent';
@@ -117,6 +118,11 @@ export default new Router({
           path: 'ques-task-detail',
           name: 'QuesTaskDetailPage',
           component: Fill,
+        },
+        {
+          path: 'ques-answer-detail',
+          name: 'QuesAnswerDetailPage',
+          component: Answers,
         },
         {
           path: 'setting',

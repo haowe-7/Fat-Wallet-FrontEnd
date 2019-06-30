@@ -40,7 +40,7 @@ const tasks = {
         getTaskInfo(queryJson).then(response => {
           const status = response.status;
           const data = response.data;
-          console.log('test data', data.data[0]);
+          console.log('task_info', data.data[0]);
           if (status === 200) {
             if (data.data[0]) {
               commit('SET_CURRENT_TASK_INFO', data.data[0]);

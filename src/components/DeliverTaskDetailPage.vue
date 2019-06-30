@@ -103,6 +103,7 @@ export default {
                 }
               }
               this.$store.dispatch('UpDateCurrentTaskInfo', this.current_task_info);
+              this.$router.go(-1);
             } else {
               throw data.error;
             }
@@ -111,7 +112,6 @@ export default {
           }).finally(() => {
             this.loading = false;
           })
-        }).catch(() => {        
         });
       }
     }

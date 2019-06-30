@@ -2,9 +2,9 @@ import request from '@/utils/requests';
 import json2queryString from '@/utils/urls';
 
 // 获取问卷提交
-export function getSubmissions(task_id) {
+export function getSubmissions(queryJson) {
   return request({
-    url: '/api/submissions?task_id=' + task_id,
+    url: '/api/submissions?' + json2queryString(queryJson),
     method: 'get'
   });
 }
