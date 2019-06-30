@@ -7,7 +7,9 @@ const users = {
       username: null,
       avatar: null,
       email: null,
-      phone: null
+      phone: null,
+      balance: null,
+      profile: null,
     },
     auth: false
   },
@@ -27,6 +29,12 @@ const users = {
     },
     SET_PHONE: (state, phone) => {
       state.info.phone = phone;
+    },
+    SET_BALANCE: (state, balance) => {
+      state.info.balance = balance;
+    },
+    SET_PROFILE: (state, profile) => {
+      state.info.profile = profile;
     },
     SET_AUTH: (state, auth) => {
       state.auth = auth;
@@ -48,6 +56,8 @@ const users = {
             commit('SET_AVATAR', data.avatar);
             commit('SET_EMAIL', data.email);
             commit('SET_EMAIL', data.phone);
+            commit('SET_BALANCE', data.balance);
+            commit('SET_PROFILE', data.profile);
             commit('SET_AUTH', true);
             resolve();
           } else {
@@ -125,6 +135,10 @@ const users = {
         }).catch((err) => reject(err));
       });
     },
+
+    SetAvatar({ commit }, avatar) {
+      commit('SET_AVATAR', avatar);
+    }
   }
 };
 

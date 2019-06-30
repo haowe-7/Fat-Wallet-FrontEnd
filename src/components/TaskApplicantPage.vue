@@ -3,7 +3,7 @@
     <div v-for="user in current_task_info.participators" v-if="user.status === '申请中'" :key="user.id">
       <el-card class="user-item" shadow="hover">
         <div id="user-icon">
-          <img src="../assets/background.jpg" />
+          <img :src="user.avatar ? '/api/file/' + user.avatar : '/static/people.png'"/>
         </div>
         <div style="display:inline-block; width:75%; vertical-align:top">
           <div :class="(user.user_id === user_id) ? 'username2' : 'username'">{{ user.username }}</div>

@@ -36,8 +36,6 @@ export default {
   },
   components: {
   },
-  beforeMount() {
-  },
   data() {
     return {
     };

@@ -1,5 +1,5 @@
 <template>
-  <div id="main">
+  <div id="main2">
     <a id="back" v-on:click="backToLogin"></a>
     <img id="logo" src="../assets/盈小钱logo.png"/>
     <div id="input-box">
@@ -129,7 +129,7 @@ export default {
 
 <style scope>
 
-#main {
+#main2 {
   background: url("../assets/background.jpg"), no-repeat;
   background-size: cover;
   width: 100%;
@@ -174,7 +174,7 @@ export default {
   background-color:transparent;
 }
 
-#back{
+#back {
   display:inline-block;
   width: 60px;
   height: 60px;

@@ -3,11 +3,11 @@
     <!-- 顶部信息模块 -->
     <div id="user-info-panel">
       <div id="user-icon">
-      <img src="../assets/background.jpg"/>
+      <img :src="avatar ? '/api/file/' + avatar : '/static/people.png'"/>
       </div>
       <div id="user-label-info-div">
-        <div id="user-name">Messiah</div>
-        <div id="user-intro">一个抱紧大佬大腿的程序猿~</div>
+        <div id="user-name">{{ username }}</div>
+        <div id="user-intro">{{ profile ? profile : '暂无个人简介' }}</div>
       </div>
       <div id="edit-user-info-button-div">
         <el-button id="edit-user-info-button" 
@@ -40,9 +40,18 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'MyInfoPage',
   components: {
+  },
+  computed: {
+    ...mapGetters({
+      username: 'username',
+      profile: 'profile',
+      avatar: 'avatar'
+    }),
   },
   data() {
     return {

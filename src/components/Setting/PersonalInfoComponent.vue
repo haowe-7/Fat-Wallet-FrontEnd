@@ -34,9 +34,11 @@
         <span style="font-size:120%; color:gray;">头像</span>
         <el-upload
           class="avatar-uploader"
-          action="https://jsonplaceholder.typicode.com/posts/"
+          action="/api/users/avatar"
+          :on-success="handleAvatarSuccess"
+          :before-upload="beforeAvatarUpload"
           :show-file-list="false">
-          <img v-if="userInfoForm.avatar" :src="userInfoForm.avatar" class="avatar">
+          <img v-if="avatar !== null" :src="'/api/file/' + avatar" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </div>
@@ -102,6 +104,18 @@ export default {
     };
   },
   methods: {
+    handleAvatarSuccess(res, file) {
+      console.log(res.data);
+      this.userInfoForm.avatar = res.data;
+      this.$store.dispatch('SetAvatar', res.data);
+    },
+    beforeAvatarUpload(file) {
+      const isLt2M = file.size / 1024 / 1024 < 2;
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!');
+      }
+      return isLt2M;
+    },
     controlButtonClick: function() {
       if(this.userInfoForm.username === '' || this.userInfoForm.student_id === '') {
         this.$message.error("姓名和学号不能为空哦😊");
@@ -141,7 +155,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      user_id: 'user_id'
+      user_id: 'user_id',
+      avatar: 'avatar',
     })
   }
 };
@@ -190,7 +205,7 @@ export default {
   width: 178px;
   height: 178px;
   display: block;
+  border-radius: 50%;
 }
-
 
 </style>

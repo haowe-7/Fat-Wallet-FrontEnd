@@ -35,11 +35,11 @@
       <div id='my-publish-task-select-imgview'>
         <el-upload
           class="avatar-uploader"
-          action="https://jsonplaceholder.typicode.com/posts/"
-          :show-file-list="false"
-          :on-success="handleAvatarSuccess"
-          :before-upload="beforeAvatarUpload">
-          <img v-if="taskForm.image" :src="taskForm.image" class="avatar">
+          action="/api/file/upload"
+          :on-success="handleImgSuccess"
+          :before-upload="beforeImgUpload"
+          :show-file-list="false">
+          <img v-if="taskForm.image" :src="'/api/file/' + taskForm.image" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </div>
@@ -80,19 +80,16 @@ export default {
     submitTaskButtonClick() {
       this.$router.push({ path: '/mainpage/myinfo/mypublishtask' });
     },
-    handleAvatarSuccess(res, file) {
-      this.taskForm.image = URL.createObjectURL(file.raw);
+    handleImgSuccess(res, file) {
+      console.log(res.data);
+      this.taskForm.image = res.data;
     },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === 'image/jpeg';
+    beforeImgUpload(file) {
       const isLt2M = file.size / 1024 / 1024 < 2;
-      if (!isJPG) {
-        this.$message.error('上传图片只能是 JPG 格式!');
-      }
       if (!isLt2M) {
-        this.$message.error('上传图片大小不能超过 2MB!');
+        this.$message.error('上传头像图片大小不能超过 2MB!');
       }
-      return isJPG && isLt2M;
+      return isLt2M;
     },
     submitTaskNextStepButtonClick() {
       this.$store.dispatch('UpDateTaskForm', this.taskForm);

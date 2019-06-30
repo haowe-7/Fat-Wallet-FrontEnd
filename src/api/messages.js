@@ -2,9 +2,9 @@ import request from '@/utils/requests';
 import json2queryString from '@/utils/urls';
 
 // 获取消息
-export function getMessages(queryJson) {
+export function getMessages() {
   return request({
-    url: '/api/messages?' + json2queryString(queryJson),
+    url: '/api/messages',
     method: 'get'
   });
 }

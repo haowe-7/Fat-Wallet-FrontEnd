@@ -12,9 +12,9 @@
           v-model="search_text">
         </el-input>
       </div>
-      <div id="money-div" v-on:click="moneyIconClick">
+      <div id="money-div">
         <img id="money-icon" src="../assets/money-icon.png"/>
-        <p id="money-count">{{ money }}</p>  
+        <p id="money-count">{{ balance ? balance : 0 }}</p>  
       </div>
       <el-popover
         enterable='false'
@@ -28,7 +28,7 @@
           <p v-on:click="goToNoticePage">消息</p>
         </div>
         <div slot="reference" class="avatar">
-          <img src="../assets/background.jpg" />
+          <img :src="avatar ? '/api/file/' + avatar : '/static/people.png'" />
         </div>
 			</el-popover>
     </div>
@@ -37,14 +37,20 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'MainPage',
   components: {},
+  computed: {
+    ...mapGetters({
+      balance: 'balance',
+      avatar: 'avatar'
+    }),
+  },
   data() {
     return {
       search_text: '',
-      money: 1000
     };
   },
   methods: {
@@ -69,15 +75,10 @@ export default {
       }).catch(() => {        
       });
     },
-    moneyIconClick() {
-      this.money += 200;
-    },
     goToNoticePage() {
       this.$router.push({ path: '/mainpage/notice' });
     }
   },
-  mounted() {
-  }
 };
 
 </script>
@@ -129,14 +130,14 @@ export default {
   margin-right: 5%;
   width: 60px;
   height: 60px;
-  overflow: hidden;
   border-radius: 50%;
 }
 
 .avatar img {
-  width: auto;
-  height: 100%;
-  margin-left: -50%;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: block;
 }
 
 .el-popover {

@@ -116,8 +116,7 @@ export default {
       phone: 'phone',
       username: 'username',
       current_task_info: 'current_task_info'
-    }),
-    
+    }),  
   },
   methods: {
     controlButtonClick() {
@@ -138,6 +137,7 @@ export default {
               email: this.email,
               phone: this.phone,
               username: this.username,
+              avatar: this.avatar,
               status: '申请中',
             }].concat(this.current_task_info.participators);
             this.$store.dispatch('UpDateCurrentTaskInfo', this.current_task_info);

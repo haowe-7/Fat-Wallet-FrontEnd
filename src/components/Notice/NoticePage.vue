@@ -4,10 +4,7 @@
       <div class="nav">
         <el-menu
           default-active="1"
-          class="el-menu-vertical-demo"
-          @open="handleOpen"
-          @close="handleClose"
-          @select="handleClick">
+          class="el-menu-vertical-demo">
           <el-submenu index="0">
             <el-menu-item slot="title" id="title-el-menu-item" index="0">
               <i class="el-icon-menu"></i>
@@ -57,10 +54,10 @@
       <div class="content">
         <div slot="header" class="content-header">
           <span style="font-size:140%; font-weight:bold;">个人资料</span>
-          <el-button dclass="control-button" :loading="loading" round v-on:click="controlButtonClick">{{controlStatus}}</el-button>
+          <el-button dclass="control-button" :loading="loading" round >{{controlStatus}}</el-button>
         </div>
-        <div v-for="o in 5" :key="o">
-          <NoticeBlock :controlButtonVisible="true" :controlButtonText="已读" :userName="jmfmjm" :noticeText="陈彬彬是世界上最帅的人"></NoticeBlock>
+        <div v-for="message in messages_list" :key="message.id">
+          <NoticeBlock :controlButtonVisible="true" :controlButtonText="'已读'" :userName="message.username" :noticeText="message.content"></NoticeBlock>
         </div>
       </div>
     </el-card>
@@ -68,12 +65,26 @@
 </template>
 
 <script>
-
+import { getMessages } from '@/api/messages';
 import NoticeBlock from '@/components/Notice/NoticeBlock';
 export default {
   name: 'NoticePage',
   components: {
     NoticeBlock
+  },
+  beforeMount() {
+    getMessages().then(response => {
+      const status = response.status;
+      const data = response.data;
+      if (status === 200) {
+        this.messages_list = data.data;
+        console.log(data.data);
+      } else {
+        throw data.error;
+      }
+    }).catch(err => {
+      this.$messages.error('获取消息列表失败' + err);
+    })
   },
   data() {
     return {
@@ -81,17 +92,10 @@ export default {
       noticeType: '全部类别',
       controlStatus: '全部已读',
       loading: false,
+      messages_list: []
     };
   },
   methods: {
-    handleOpen(key, keyPath) {
-      console.log(key);
-    },
-    handleClick(tab, event) {
-      if(tab == 0) return;
-      this.noticeType = this.noticeTypeList[tab-1];
-      console.log(this.noticeType);
-    }
   },
 };
 </script>
